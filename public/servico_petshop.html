@@ -132,7 +132,9 @@ header {
 
 <header>
     <h1>Gerenciar Serviços</h1>
-    <button id="logout" class="btn-sair">Sair</button>
+    <a href="dashboard_petshop.html">
+        <button class="btn-sair">Voltar</button>
+    </a>
 </header>
 
 <div class="container">
@@ -290,11 +292,7 @@ async function excluir(id) {
     }
 }
 
-// Logout
-document.getElementById("logout").onclick = () => {
-    localStorage.removeItem("token_petshop");
-    window.location.href = "login_petshop.html";
-};
+
 </script>
 
 </body>

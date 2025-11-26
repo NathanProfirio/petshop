@@ -6,6 +6,7 @@
     <title>PetMarket - Marketplace Pet</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <style>
  /* CONTAINER GERAL */
 .produtos-container {
@@ -22,14 +23,12 @@
     color: #222;
 }
 
-/* GRID RESPONSIVO */
 .produtos-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 25px;
 }
 
-/* CARD PROFISSIONAL */
 .produto {
     background: #fff;
     border-radius: 14px;
@@ -44,7 +43,6 @@
     box-shadow: 0 6px 20px rgba(0,0,0,0.12);
 }
 
-/* IMAGEM */
 .produto img {
     width: 100%;
     height: 200px;
@@ -52,24 +50,21 @@
     background: #f7f7f7;
 }
 
-/* INFORMACOES */
 .produto-info {
     padding: 15px;
 }
 
-/* NOME DO PRODUTO */
 .produto-info h3 {
     font-size: 1rem;
     color: #333;
     font-weight: 600;
-    height: 42px; /* limita em 2 linhas */
+    height: 42px;
     line-height: 1.2;
     overflow: hidden;
     text-overflow: ellipsis;
     margin-bottom: 6px;
 }
 
-/* PREÇO */
 .preco {
     font-size: 1.4rem;
     color: #0284ff;
@@ -78,7 +73,6 @@
     display: block;
 }
 
-/* BOTÃO VER MAIS */
 .btn-ver {
     display: block;
     width: 100%;
@@ -97,7 +91,6 @@
     background: #006ed1;
 }
 
-/* FRETE GRÁTIS (opcional) */
 .frete {
     font-size: .9rem;
     color: #00bb2d;
@@ -105,7 +98,25 @@
     margin-bottom: 5px;
 }
 
-/* RESPONSIVIDADE EXTRA */
+.logouBtn {
+    color: #00bb2d;
+}
+.carrinho {
+    font-size: 22px; 
+    margin-right: 20px; 
+    cursor: pointer; 
+    position:relative;
+}
+.numero-carrinho {
+    background:red; 
+    color:white; 
+    font-size:12px; 
+    padding:2px 6px; 
+    border-radius:50%; 
+    position:absolute; 
+    top:-8px; 
+    right:-12px;
+}
 @media (max-width: 480px) {
     .produto img {
         height: 160px;
@@ -114,22 +125,40 @@
         font-size: 1.8rem;
     }
 }
-
-
 </style>
+
 <body>
 
     <!-- Navbar -->
     <header class="navbar">
         <div class="logo">🐾 PetMarket</div>
+        <div>
+            <span id="areaUsuario" style="display:none; font-weight:bold; color:rgb(0, 0, 0); margin-right:15px;">
+                Usuario: <span id="nomeUsuario"></span>
+                
+            </span>
+            
+        </div>
         <nav>
             <a href="#">Home</a>
-            <a href="#">Petshops</a>
             <a href="produtos.html">Produtos</a>
-            <a href="cadastro_servico.html">Serviços</a>
+            <a href="servico.html">Serviços</a>
+             <a href="carrinho.html" id="cart" class="carrinho">
+                🛒
+                <span id="cartCount" class="numero-carrinho">
+                    0
+                </span>
+            </a>
+            <button id="logoutBtn" class="btn-login">
+            Sair
+        </button>
             
-            <a href="login_cliente.html" class="btn-login">Entrar</a>
-            <h2 id="bemVindo"></h2>
+            <!-- BOTÃO LOGIN (some quando logado) -->
+            <a href="login_cliente.html" class="btn-login" id="btnLogin">Entrar</a>
+
+
+            <!-- ÍCONE DO CARRINHO -->
+           
         </nav>
     </header>
 
@@ -140,7 +169,7 @@
         <a href="#" class="btn-cta">Explorar Petshops</a>
     </section>
 
-    <!-- Cards de categorias -->
+    <!-- Categorias -->
     <section class="categorias">
         <h2>Categorias</h2>
 
@@ -164,59 +193,95 @@
                 <img src="https://cdn-icons-png.flaticon.com/512/6787/6787012.png" alt="">
                 <h3>Acessórios</h3>
             </div>
-    
-    </section>
-    <section class="produtos-container">
-        <h2 class="titulo-produtos">Produtos em destaque</h2>
-
-        <div class="produtos-grid" id="lista-produtos">
-            <!-- Produtos serão inseridos aqui pelo JS -->
         </div>
     </section>
 
-    <!-- Rodapé -->
+    <!-- Produtos -->
+    <section class="produtos-container">
+        <h2 class="titulo-produtos">Produtos em destaque</h2>
+
+        <div class="produtos-grid" id="lista-produtos"></div>
+    </section>
+
     <footer class="footer">
         <p>© 2025 PetMarket — Todos os direitos reservados.</p>
     </footer>
 
 <script>
+
+// =========================
+// 🔹 CONTROLE DE LOGIN / LOGOUT
+// =========================
+const nomeCliente = localStorage.getItem("cliente_nome");
+
+// ELEMENTOS
+const areaUsuario = document.getElementById("areaUsuario");
+const nomeUsuario = document.getElementById("nomeUsuario");
+const btnLogin = document.getElementById("btnLogin");
+const logoutBtn = document.getElementById("logoutBtn");
+
+// Se estiver logado
+if (nomeCliente) {
+    areaUsuario.style.display = "inline-block"; // mostra "Usuário: nome"
+    nomeUsuario.textContent = nomeCliente;
+
+    btnLogin.style.display = "none"; // esconde botão Entrar
+    logoutBtn.style.display = "inline-block"; // mostra botão Sair
+} else {
+    // Se NÃO estiver logado
+    areaUsuario.style.display = "none"; 
+    logoutBtn.style.display = "none"; // esconde botão Sair
+    btnLogin.style.display = "inline-block"; // mostra botão Entrar
+}
+
+// Botão sair
+logoutBtn.addEventListener("click", () => {
+    localStorage.clear();
+    window.location.reload();
+});
+
+
+// =========================
+// 🔹 CARRINHO
+// =========================
+function atualizarCarrinho() {
+    const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    document.getElementById("cartCount").textContent = carrinho.length;
+}
+atualizarCarrinho();
+
+// =========================
+// 🔹 PRODUTOS
+// =========================
 async function carregarProdutos() {
     try {
-        const res = await fetch('/produto'); // AQUI É O CERTO
+        const res = await fetch('/produto');
         const produtos = await res.json();
 
         const lista = document.getElementById('lista-produtos');
         lista.innerHTML = '';
 
         produtos.forEach(p => {
-            const item = document.createElement('div');
-            item.classList.add('produto');
-
-            item.innerHTML = `
-    <img src="${p.imagem_url || 'https://placehold.co/600x400?text=Sem+Imagem'}" alt="${p.nome}">
-    <div class="produto-info">
-        <h3>${p.nome}</h3>
-        <span class="preco">R$ ${p.preco}</span>
-        <span class="frete">Frete grátis</span>
-        <a href="ver_produto.html?id=${p.id_produto}" class="btn-ver">Ver produto</a>
-    </div>
-`;
-
-
-            lista.appendChild(item);
+            lista.innerHTML += `
+            <div class="produto">
+                <img src="${p.imagem_url || 'https://placehold.co/600x400?text=Sem+Imagem'}" alt="${p.nome}">
+                <div class="produto-info">
+                    <h3>${p.nome}</h3>
+                    <span class="preco">R$ ${p.preco}</span>
+                    <span class="frete">Frete grátis</span>
+                    <a href="ver_produto.html?id=${p.id_produto}" class="btn-ver">Ver produto</a>
+                </div>
+            </div>
+            `;
         });
 
     } catch (erro) {
         console.error("Erro:", erro);
-        document.getElementById('lista-produtos').innerHTML =
-            "<p style='color:red'>Erro ao carregar produtos.</p>";
     }
 }
 
 carregarProdutos();
-
 </script>
-
 
 </body>
 </html>

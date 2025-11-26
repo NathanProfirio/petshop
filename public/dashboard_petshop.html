@@ -4,12 +4,75 @@
     <meta charset="UTF-8">
     <title>Dashboard Petshop</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+
+        .categorias {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+.categorias h2 {
+    font-size: 28px;
+    margin-bottom: 25px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+           .btn-sair {
+        background: #ef4444;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 8px;
+        cursor: pointer;
+        color: white;
+        font-size: 15px;
+    }
+    .btn-sair:hover { background: #dc2626; }
+    .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: #1e293b;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+    transition: 0.25s;
+    border: 2px solid transparent;
+}
+
+.card h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #475569;
+    font-size: 14px;
+}
+/* HOVER LINDO */
+.card:hover {
+    transform: translateY(-6px);
+    border-color: #2563eb;
+    box-shadow: 0 8px 20px rgba(37,99,235,0.2);
+}
+    </style>
 </head>
 
 <body>
 
 <header class="navbar">
     <div class="logo">🐾 Painel Petshop</div>
+    <a href="login_petshop.html">
+        <button class="btn-sair">Sair</button>
+    </a>
 </header>
 
 <section class="categorias">

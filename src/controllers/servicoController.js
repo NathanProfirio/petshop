@@ -52,17 +52,24 @@ export async function listarServicosPetshop(req, res) {
 export async function listarServicosPublic(req, res) {
     try {
         const { q, petshop } = req.query;
-        let query = 'SELECT * FROM servico WHERE ativo = TRUE';
+
+        let query = `
+            SELECT s.*, p.nome AS nome_petshop
+            FROM servico s
+            JOIN petshop p ON p.id_petshop = s.id_petshop
+            WHERE s.ativo = TRUE
+        `;
+
         const params = [];
 
         if (q) {
             params.push(`%${q}%`);
-            query += ` AND nome ILIKE $${params.length}`;
+            query += ` AND s.nome ILIKE $${params.length}`;
         }
 
         if (petshop) {
             params.push(petshop);
-            query += ` AND id_petshop = $${params.length}`;
+            query += ` AND s.id_petshop = $${params.length}`;
         }
 
         const result = await pool.query(query, params);
@@ -73,6 +80,7 @@ export async function listarServicosPublic(req, res) {
         res.status(500).json({ error: "Erro ao listar serviços" });
     }
 }
+
 
 // Atualizar serviço do petshop
 export async function atualizarServico(req, res) {

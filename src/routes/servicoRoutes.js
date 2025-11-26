@@ -7,7 +7,7 @@ import {
     listarServicosPublic,
     atualizarServico,
     removerServico,
-    obterServico   // <-- IMPORTANTE
+    obterServico
 } from "../controllers/servicoController.js";
 
 const router = express.Router();
@@ -18,9 +18,6 @@ router.get("/", listarServicosPublic);
 // 📌 Lista apenas do petshop autenticado
 router.get("/meus", authPetshop, listarServicosPetshop);
 
-// 📌 Obter 1 serviço específico (necessário para tela de edição)
-router.get("/:id", authPetshop, obterServico);  // <-- ROTA QUE FALTAVA
-
 // 📌 Criar serviço
 router.post("/", authPetshop, criarServico);
 
@@ -30,5 +27,10 @@ router.put("/:id", authPetshop, atualizarServico);
 // 📌 Remover serviço
 router.delete("/:id", authPetshop, removerServico);
 
+// 📌 Obter 1 serviço específico (necessário para edição)
+router.get("/:id", authPetshop, obterServico); 
+// 🔥 MOVIDO PARA O FINAL!
+
 export default router;
+
 
