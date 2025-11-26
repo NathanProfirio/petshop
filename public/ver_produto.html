@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Produto | Marketplace Pet</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f5f5f5;
+        }
+
+        header {
+            background: #2874f0;
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            gap: 40px;
+            padding: 30px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* FOTO PRINCIPAL */
+        .galeria {
+            flex: 1;
+        }
+
+        .foto-principal {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .miniaturas {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .miniaturas img {
+            width: 90px;
+            height: 90px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            object-fit: cover;
+        }
+
+        .miniaturas img:hover {
+            border-color: #2874f0;
+        }
+
+        /* INFO DO PRODUTO */
+        .info-produto {
+            flex: 1;
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .titulo {
+            font-size: 26px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .avaliacao {
+            color: #fbc02d;
+            margin-bottom: 15px;
+        }
+
+        .preco {
+            display: block;
+            font-size: 34px;
+            color: #2874f0;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .frete {
+            color: green;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background: #ffb000;
+            border: none;
+            border-radius: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #ff9800;
+        }
+
+        /* DESCRIÇÃO */
+        .descricao-box {
+            max-width: 1200px;
+            margin: 30px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .descricao-box h3 {
+            margin-top: 0;
+            font-size: 22px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>Marketplace Pet</header>
+
+<div class="container">
+    <!-- GALERIA -->
+    <div class="galeria">
+        <img id="foto-principal" class="foto-principal" src="" alt="Produto">
+
+        <div id="miniaturas" class="miniaturas"></div>
+    </div>
+
+    <!-- INFO -->
+    <div class="info-produto">
+        <div id="nome" class="titulo"></div>
+
+        <div class="avaliacao">★★★★★ 4.9 (132)</div>
+
+        <span id="preco" class="preco"></span>
+        <div class="frete">Frete grátis</div>
+
+        <button onclick="alert('Adicionado ao carrinho!')">Adicionar ao Carrinho</button>
+    </div>
+</div>
+
+<!-- DESCRIÇÃO -->
+<div class="descricao-box">
+    <h3>Descrição do Produto</h3>
+    <p id="descricao"></p>
+</div>
+
+<script>
+    async function carregarProduto() {
+        const params = new URLSearchParams(location.search);
+        const id = params.get("id");
+
+        if (!id) return alert("ID do produto não encontrado na URL.");
+
+        try {
+            const res = await fetch("/produto/" + id);
+            const p = await res.json();
+
+            document.getElementById("nome").innerText = p.nome;
+            document.getElementById("preco").innerText = "R$ " + p.preco;
+            document.getElementById("descricao").innerText = p.descricao;
+
+            // FOTO PRINCIPAL
+            document.getElementById("foto-principal").src =
+                p.imagem_url || "https://placehold.co/600x400?text=Sem+Imagem";
+
+            // MINIATURAS (se houver mais imagens no futuro)
+            const boxThumb = document.getElementById("miniaturas");
+            boxThumb.innerHTML = "";
+
+            const listaImagens = [
+                p.imagem_url
+            ].filter(Boolean);
+
+            listaImagens.forEach(img => {
+                const mini = document.createElement("img");
+                mini.src = img;
+                mini.onclick = () => {
+                    document.getElementById("foto-principal").src = img;
+                };
+                boxThumb.appendChild(mini);
+            });
+
+        } catch (err) {
+            console.error(err);
+            alert("Erro ao carregar o produto.");
+        }
+    }
+
+    carregarProduto();
+</script>
+
+</body>
+</html>

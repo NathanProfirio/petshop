@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Petshops</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo">🐾 PetMarket</div>
+</header>
+
+<section class="categorias">
+    <h2>Petshops Disponíveis</h2>
+
+    <div class="cards" id="listaPetshops">
+        <!-- Os petshops serão carregados via JS -->
+    </div>
+
+</section>
+
+<script>
+fetch("http://localhost:3000/petshop")
+    .then(r => r.json())
+    .then(data => {
+        const div = document.getElementById("listaPetshops");
+        div.innerHTML = data.map(p => `
+            <div class="card">
+                <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png">
+                <h3>${p.nome}</h3>
+                <p>${p.endereco}</p>
+            </div>
+        `).join("");
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetMarket - Marketplace Pet</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<style>
+ /* CONTAINER GERAL */
+.produtos-container {
+    max-width: 1300px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.titulo-produtos {
+    font-size: 2.2rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #222;
+}
+
+/* GRID RESPONSIVO */
+.produtos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 25px;
+}
+
+/* CARD PROFISSIONAL */
+.produto {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #e6e6e6;
+    transition: transform .25s ease, box-shadow .25s ease;
+    cursor: pointer;
+}
+
+.produto:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+}
+
+/* IMAGEM */
+.produto img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background: #f7f7f7;
+}
+
+/* INFORMACOES */
+.produto-info {
+    padding: 15px;
+}
+
+/* NOME DO PRODUTO */
+.produto-info h3 {
+    font-size: 1rem;
+    color: #333;
+    font-weight: 600;
+    height: 42px; /* limita em 2 linhas */
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 6px;
+}
+
+/* PREÇO */
+.preco {
+    font-size: 1.4rem;
+    color: #0284ff;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: block;
+}
+
+/* BOTÃO VER MAIS */
+.btn-ver {
+    display: block;
+    width: 100%;
+    text-align: center;
+    background: #0284ff;
+    color: #fff;
+    padding: 10px 0;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: background .2s;
+}
+
+.btn-ver:hover {
+    background: #006ed1;
+}
+
+/* FRETE GRÁTIS (opcional) */
+.frete {
+    font-size: .9rem;
+    color: #00bb2d;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* RESPONSIVIDADE EXTRA */
+@media (max-width: 480px) {
+    .produto img {
+        height: 160px;
+    }
+    .titulo-produtos {
+        font-size: 1.8rem;
+    }
+}
+
+
+</style>
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">🐾 PetMarket</div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Petshops</a>
+            <a href="produtos.html">Produtos</a>
+            <a href="cadastro_servico.html">Serviços</a>
+            
+            <a href="login_cliente.html" class="btn-login">Entrar</a>
+            <h2 id="bemVindo"></h2>
+        </nav>
+    </header>
+
+    <!-- Banner -->
+    <section class="hero">
+        <h1>O marketplace ideal para cuidar do seu pet ❤️</h1>
+        <p>Encontre petshops, agende serviços e compre produtos em um só lugar.</p>
+        <a href="#" class="btn-cta">Explorar Petshops</a>
+    </section>
+
+    <!-- Cards de categorias -->
+    <section class="categorias">
+        <h2>Categorias</h2>
+
+        <div class="cards">
+            <div class="card">
+                <img src="https://cdn-icons-png.flaticon.com/512/194/194279.png" alt="">
+                <h3>Banho & Tosa</h3>
+            </div>
+
+            <div class="card">
+                <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="">
+                <h3>Consultas Veterinárias</h3>
+            </div>
+
+            <div class="card">
+                <img src="https://cdn-icons-png.flaticon.com/512/1998/1998611.png" alt="">
+                <h3>Rações</h3>
+            </div>
+
+            <div class="card">
+                <img src="https://cdn-icons-png.flaticon.com/512/6787/6787012.png" alt="">
+                <h3>Acessórios</h3>
+            </div>
+    
+    </section>
+    <section class="produtos-container">
+        <h2 class="titulo-produtos">Produtos em destaque</h2>
+
+        <div class="produtos-grid" id="lista-produtos">
+            <!-- Produtos serão inseridos aqui pelo JS -->
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <p>© 2025 PetMarket — Todos os direitos reservados.</p>
+    </footer>
+
+<script>
+async function carregarProdutos() {
+    try {
+        const res = await fetch('/produto'); // AQUI É O CERTO
+        const produtos = await res.json();
+
+        const lista = document.getElementById('lista-produtos');
+        lista.innerHTML = '';
+
+        produtos.forEach(p => {
+            const item = document.createElement('div');
+            item.classList.add('produto');
+
+            item.innerHTML = `
+    <img src="${p.imagem_url || 'https://placehold.co/600x400?text=Sem+Imagem'}" alt="${p.nome}">
+    <div class="produto-info">
+        <h3>${p.nome}</h3>
+        <span class="preco">R$ ${p.preco}</span>
+        <span class="frete">Frete grátis</span>
+        <a href="ver_produto.html?id=${p.id_produto}" class="btn-ver">Ver produto</a>
+    </div>
+`;
+
+
+            lista.appendChild(item);
+        });
+
+    } catch (erro) {
+        console.error("Erro:", erro);
+        document.getElementById('lista-produtos').innerHTML =
+            "<p style='color:red'>Erro ao carregar produtos.</p>";
+    }
+}
+
+carregarProdutos();
+
+</script>
+
+
+</body>
+</html>

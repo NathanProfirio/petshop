@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Petshop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            width: 420px;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin: 8px 0 4px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: #0077ff;
+            color: white;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #005fcc;
+        }
+
+        #msg {
+            margin-top: 12px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Cadastrar Petshop</h2>
+
+    <form id="formCadastro">
+        <label>Nome do Petshop</label>
+        <input type="text" id="nome" required>
+
+        <label>CNPJ</label>
+        <input type="text" id="cnpj" required>
+
+        <label>Endereço</label>
+        <input type="text" id="endereco" required>
+
+        <label>Telefone</label>
+        <input type="text" id="telefone">
+
+        <label>Email</label>
+        <input type="email" id="email" required>
+
+        <label>Senha</label>
+        <input type="password" id="senha" required>
+
+        <button type="submit">Cadastrar</button>
+    </form>
+    <div class="link">
+        Já possui conta? <a href="login_petshop.html">Entrar</a>
+    </div>
+    <div id="msg"></div>
+</div>
+
+<script>
+    const API_URL = "http://localhost:3000/petshop/register"; // ajuste se necessário
+
+    document.getElementById("formCadastro").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const dados = {
+            nome: document.getElementById("nome").value,
+            cnpj: document.getElementById("cnpj").value,
+            endereco: document.getElementById("endereco").value,
+            telefone: document.getElementById("telefone").value,
+            email: document.getElementById("email").value,
+            senha: document.getElementById("senha").value
+        };
+
+        try {
+            const resposta = await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(dados)
+            });
+
+            const json = await resposta.json();
+
+            if (resposta.ok) {
+                document.getElementById("msg").style.color = "green";
+                document.getElementById("msg").innerText = "Petshop cadastrado com sucesso! Redirecionando...";
+
+                // Redireciona para a tela de login em 1.5 segundos
+                setTimeout(() => {
+                    window.location.href = "login_petshop.html";
+                }, 1500);
+                
+            } else {
+                document.getElementById("msg").style.color = "red";
+                document.getElementById("msg").innerText = json.error || "Erro ao cadastrar.";
+            }
+
+        } catch (err) {
+            document.getElementById("msg").style.color = "red";
+            document.getElementById("msg").innerText = "Erro de conexão com o servidor.";
+        }
+    });
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Produtos - Petshop</title>
+    <link rel="stylesheet" href="css/produtos.css">
+<style>
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Poppins, Arial, sans-serif;
+}
+
+body {
+    background: #f4f6f9;
+    padding: 20px;
+}
+
+/* Cabeçalho */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+header h1 {
+    font-size: 28px;
+    color: #333;
+}
+
+.btn {
+    padding: 12px 18px;
+    background: #20bf6b;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    background: #17a65c;
+}
+
+/* Container dos cards */
+.produtos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+}
+
+/* Card */
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+
+.card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.card h3 {
+    margin: 10px 0 5px;
+    font-size: 18px;
+    color: #333;
+}
+
+.card .descricao {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.card .preco {
+    font-size: 18px;
+    font-weight: bold;
+    color: #20bf6b;
+}
+
+/* Mensagens */
+.carregando,
+.nenhum,
+.erro {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 18px;
+    margin-top: 40px;
+    color: #666;
+}
+
+.erro {
+    color: red;
+}
+</style>
+</head>
+<body>
+
+
+<header>
+    <h1>Produtos do Petshop</h1>
+    <a href="cadastro_produto.html" class="btn">Cadastrar Produto</a>
+</header>
+
+<section id="produtos" class="produtos-container">
+    <p class="carregando">Carregando produtos...</p>
+</section>
+
+<script>
+async function carregarProdutos() {
+    try {
+        const resposta = await fetch("http://localhost:3000/produto");
+        const dados = await resposta.json();
+
+        const container = document.getElementById("produtos");
+        container.innerHTML = "";
+
+        if (dados.length === 0) {
+            container.innerHTML = "<p class='nenhum'>Nenhum produto cadastrado.</p>";
+            return;
+        }
+
+        dados.forEach(produto => {
+            container.innerHTML += `
+                <div class="card">
+                    <img src="${produto.imagem_url ? produto.imagem_url : 'img/sem-imagem.png'}" alt="Imagem do Produto">
+                    <h3>${produto.nome}</h3>
+                    <p class="descricao">${produto.descricao}</p>
+                    <span class="preco">R$ ${produto.preco}</span>
+                </div>
+            `;
+        });
+    } catch (erro) {
+        console.error("Erro ao buscar produtos:", erro);
+        document.getElementById("produtos").innerHTML =
+            "<p class='erro'>Erro ao carregar os produtos.</p>";
+    }
+}
+
+carregarProdutos();
+</script>
+
+</body>
+</html>
+

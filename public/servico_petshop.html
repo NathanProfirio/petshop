@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Gerenciar Serviços</title>
+<link rel="stylesheet" href="style_servicos.css">
+</head>
+<body>
+<style>
+        body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f0f2f5;
+}
+
+header {
+    background: #2563eb;
+    color: white;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-sair {
+    background: #dc3545;
+    border: none;
+    padding: 8px 15px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.container {
+    padding: 20px;
+}
+
+.btn-add {
+    display: inline-block;
+    background: #2563eb;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-bottom: 20px;
+}
+
+.produtos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 6px #0002;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.btn-edit {
+    background: #ffaa00;
+    border: none;
+    padding: 6px 12px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-delete {
+    background: #dc3545;
+    border: none;
+    padding: 6px 12px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* MODAL */
+#modal-editar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0008;
+    justify-content: center;
+    align-items: center;
+}
+
+#modal-box {
+    background: white;
+    width: 360px;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+#modal-box input,
+#modal-box textarea,
+#modal-box select {
+    width: 100%;
+    margin: 5px 0 15px;
+    padding: 8px;
+}
+
+.btn-save {
+    background: #28a745;
+    padding: 8px 14px;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background: #555;
+    padding: 8px 14px;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+</style>
+
+<header>
+    <h1>Gerenciar Serviços</h1>
+    <button id="logout" class="btn-sair">Sair</button>
+</header>
+
+<div class="container">
+    <a href="cadastro_servico.html" class="btn-add">+ Adicionar Serviço</a>
+
+    <div id="servicos" class="produtos-grid"></div>
+</div>
+
+<!-- 🔵 MODAL DE EDIÇÃO -->
+<div id="modal-editar">
+    <div id="modal-box">
+        <h2>Editar Serviço</h2>
+
+        <label>Nome</label>
+        <input id="edit-nome">
+
+        <label>Preço</label>
+        <input id="edit-preco" type="number" step="0.01">
+
+        <label>Duração (minutos)</label>
+        <input id="edit-duracao" type="number">
+
+        <label>Status</label>
+        <select id="edit-ativo">
+            <option value="true">Ativo</option>
+            <option value="false">Inativo</option>
+        </select>
+
+        <label>Descrição</label>
+        <textarea id="edit-descricao"></textarea>
+
+        <button class="btn-save" onclick="salvarEdicao()">Salvar</button>
+        <button class="btn-cancel" onclick="fecharModal()">Cancelar</button>
+    </div>
+</div>
+
+<script>
+const token = localStorage.getItem("token_petshop");
+if (!token) window.location.href = "login_petshop.html";
+
+let servicoAtual = null;
+
+// ⬅ Carregar serviços do petshop
+async function carregarServicos() {
+    try {
+        const resp = await fetch("http://localhost:3000/servico/meus", {
+            headers: { "Authorization": "Bearer " + token }
+        });
+
+        const dados = await resp.json();
+        const container = document.getElementById("servicos");
+        container.innerHTML = "";
+
+        dados.forEach(s => {
+            container.innerHTML += `
+                <div class="card">
+                    <h3>${s.nome}</h3>
+                    <p>${s.descricao}</p>
+                    <strong>R$ ${s.preco}</strong>
+
+                    <span class="status-badge" style="
+                        margin-top: 5px;
+                        display:inline-block;
+                        padding:4px 8px;
+                        border-radius:6px;
+                        font-weight:bold;
+                        font-size:13px;
+                        color:white;
+                        background:${s.ativo ? '#28a745' : '#dc3545'};
+                    ">
+                        ${s.ativo ? 'Ativo' : 'Inativo'}
+                    </span>
+
+                    <p style="margin-top:5px; font-size:13px; color:#444;">
+                        Duração: ${s.duracao_minutos} min
+                    </p>
+
+                    <div class="actions">
+                        <button class="btn-edit" onclick="editar(${s.id_servico})">Editar</button>
+                        <button class="btn-delete" onclick="excluir(${s.id_servico})">Excluir</button>
+                    </div>
+                </div>
+            `;
+        });
+
+    } catch (erro) {
+        console.error("Erro ao carregar serviços:", erro);
+    }
+}
+
+carregarServicos();
+
+// 🔵 Abrir modal com dados
+async function editar(id) {
+    const resp = await fetch(`http://localhost:3000/servico/${id}`, {
+        headers: { "Authorization": "Bearer " + token }
+    });
+
+    const servico = await resp.json();
+    servicoAtual = servico;
+
+    document.getElementById("edit-nome").value = servico.nome;
+    document.getElementById("edit-preco").value = servico.preco;
+    document.getElementById("edit-duracao").value = servico.duracao_minutos;
+    document.getElementById("edit-descricao").value = servico.descricao;
+    document.getElementById("edit-ativo").value = servico.ativo ? "true" : "false";
+
+    document.getElementById("modal-editar").style.display = "flex";
+}
+
+function fecharModal() {
+    document.getElementById("modal-editar").style.display = "none";
+}
+
+// ✔ Salvar edição
+async function salvarEdicao() {
+    const body = {
+        nome: document.getElementById("edit-nome").value,
+        preco: document.getElementById("edit-preco").value,
+        descricao: document.getElementById("edit-descricao").value,
+        duracao_minutos: document.getElementById("edit-duracao").value,
+        ativo: document.getElementById("edit-ativo").value
+    };
+
+    const resp = await fetch(`http://localhost:3000/servico/${servicoAtual.id_servico}`, {
+        method: "PUT",
+        headers: { 
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json" 
+        },
+        body: JSON.stringify(body)
+    });
+
+    if (!resp.ok) return alert("Erro ao atualizar serviço!");
+
+    alert("Serviço atualizado com sucesso!");
+    fecharModal();
+    carregarServicos();
+}
+
+// 🗑 Excluir serviço
+async function excluir(id) {
+    if (!confirm("Deseja realmente excluir este serviço?")) return;
+
+    const resp = await fetch(`http://localhost:3000/servico/${id}`, {
+        method: "DELETE",
+        headers: { "Authorization": "Bearer " + token }
+    });
+
+    if (resp.ok) {
+        alert("Serviço excluído!");
+        carregarServicos();
+    } else {
+        alert("Erro ao excluir!");
+    }
+}
+
+// Logout
+document.getElementById("logout").onclick = () => {
+    localStorage.removeItem("token_petshop");
+    window.location.href = "login_petshop.html";
+};
+</script>
+
+</body>
+</html>

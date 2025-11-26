@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Serviço</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Poppins, sans-serif;
+            background: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            width: 420px;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        label {
+            margin-top: 10px;
+            display: block;
+            font-weight: 500;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        textarea {
+            height: 90px;
+            resize: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .voltar {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .voltar a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Cadastrar Serviço</h2>
+
+    <form id="formServico">
+
+        <label>Nome do Serviço</label>
+        <input type="text" name="nome" required>
+
+        <label>Descrição</label>
+        <textarea name="descricao" required></textarea>
+
+        <label>Preço (R$)</label>
+        <input type="number" step="0.01" name="preco" required>
+
+        <label>Duração (minutos)</label>
+        <input type="number" name="duracao_minutos" required>
+
+        <button type="submit">Cadastrar Serviço</button>
+    </form>
+
+    <div class="voltar">
+        <a href="painel_petshop.html">← Voltar ao painel</a>
+    </div>
+</div>
+
+
+<script>
+const token = localStorage.getItem("token_petshop");
+
+// Se não estiver logado → manda para login
+if (!token) {
+    window.location.href = "login_petshop.html";
+}
+
+document.getElementById("formServico").onsubmit = async (event) => {
+    event.preventDefault();
+
+    const form = event.target;
+
+    const dados = {
+        nome: form.nome.value,
+        descricao: form.descricao.value,
+        preco: form.preco.value,
+        duracao_minutos: form.duracao_minutos.value
+    };
+
+    const resposta = await fetch("http://localhost:3000/servico", {
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer " + token,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dados)
+    });
+
+    if (resposta.ok) {
+        alert("Serviço cadastrado com sucesso!");
+        window.location.href = "servico_petshop.html"; // volta ao painel
+    } else {
+        alert("Erro ao cadastrar serviço.");
+    }
+};
+</script>
+
+</body>
+</html>

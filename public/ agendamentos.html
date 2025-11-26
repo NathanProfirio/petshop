@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Agendamentos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo">🐾 Agendamentos</div>
+</header>
+
+<section class="categorias">
+    <h2>Agendamentos do Cliente</h2>
+
+    <div class="cards" id="listaAgendamentos"></div>
+</section>
+
+<script>
+fetch("http://localhost:3000/agendamento")
+    .then(r => r.json())
+    .then(lista => {
+        document.getElementById("listaAgendamentos").innerHTML =
+            lista.map(a => `
+                <div class="card">
+                    <h3>Serviço #${a.id_servico}</h3>
+                    <p>Data: ${new Date(a.data_hora).toLocaleString()}</p>
+                    <p>Status: ${a.status}</p>
+                </div>
+            `).join("");
+    });
+</script>
+
+</body>
+</html>
+x

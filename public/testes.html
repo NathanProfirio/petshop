@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetMarket - Sua Loja Pet</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo">🐾 PetMarket</div>
+
+        <nav class="menu">
+            <a href="index.html">Home</a>
+            <a href="produtos.html">Produtos</a>
+            <a href="carrinho.html">Carrinho</a>
+            <a href="login.html" class="btn-login">Entrar</a>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Os melhores produtos para o seu pet</h1>
+        <p>Rações, brinquedos, acessórios e muito mais!</p>
+        <a href="produtos.html" class="btn">Ver Todos os Produtos</a>
+    </section>
+
+    <!-- Lista dinâmica -->
+    <section class="produtos-container">
+        <h2 class="titulo-produtos">Produtos em destaque</h2>
+
+        <div class="produtos-grid" id="lista-produtos">
+            <!-- Produtos serão inseridos aqui pelo JS -->
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>© 2025 PetMarket - Todos os direitos reservados</p>
+    </footer>
+
+    <script src="home.js"></script>
+</body>
+</html>
+
