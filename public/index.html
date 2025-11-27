@@ -140,7 +140,7 @@
             
         </div>
         <nav>
-            <a href="#">Home</a>
+            <a href="index.html">Home</a>
             <a href="produtos.html">Produtos</a>
             <a href="servico.html">Serviços</a>
              <a href="carrinho.html" id="cart" class="carrinho">
@@ -181,7 +181,7 @@
 
             <div class="card">
                 <img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="">
-                <h3>Consultas Veterinárias</h3>
+                <h3>Cosmeticos</h3>
             </div>
 
             <div class="card">
@@ -292,14 +292,15 @@ async function carregarProdutos() {
 
         produtos.forEach(p => {
             lista.innerHTML += `
-            <div class="produto">
+            <div class="produto" onclick="window.location.href = '/ver_produto.html?id=${p.id_produto}'">
+                
                 <img src="${p.imagem_url || 'https://placehold.co/600x400?text=Sem+Imagem'}" alt="${p.nome}">
                 <div class="produto-info">
                     <h3>${p.nome}</h3>
                     <span class="preco">R$ ${p.preco}</span>
                     <span class="frete">Frete grátis</span>
-                    <button class="btn-ver" onclick='adicionarAoCarrinho(${JSON.stringify(p)})'>
-                        Adicionar ao carrinho
+                    <button class="btn-ver" onclick="window.location.href = '/ver_produto.html?id=${p.id_produto}'">
+                        Ver Produto
                     </button>
                 </div>
             </div>

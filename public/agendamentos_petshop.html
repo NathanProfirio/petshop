@@ -5,21 +5,82 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Agendamentos - Petshop</title>
 <style>
-body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f3f4f6; }
-header { background:#2563eb; color:white; padding:20px; text-align:center; }
-.container { max-width:900px; margin:30px auto; background:white; padding:25px; border-radius:12px; box-shadow:0 3px 8px rgba(0,0,0,0.15); }
-table { width:100%; border-collapse: collapse; margin-top:20px; }
-th, td { padding:12px; border-bottom:1px solid #ddd; text-align:left; }
-th { background:#2563eb; color:white; }
-.status-pendente { color:#f59e0b; font-weight:bold; }
-.status-confirmado { color:#16a34a; font-weight:bold; }
-.status-cancelado { color:#ef4444; font-weight:bold; }
+body { 
+    font-family: Arial, sans-serif; 
+    margin:0; 
+    padding:0; 
+    background:#f3f4f6; 
+}
+header {
+            background: #2874f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 22px;
+            font-weight: bold;  
+        }
+
+        header h1 {
+            font-size: 28px;
+            color: #ffffff;
+        }
+
+.btn {
+    padding: 12px 18px;
+    background: #20bf6b;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.2s;
+}
+.container { 
+    max-width:900px; 
+    margin:30px auto; 
+    background:white; 
+    padding:25px; 
+    border-radius:12px; 
+    box-shadow:0 3px 8px rgba(0,0,0,0.15); 
+}
+table { 
+    width:100%; 
+    border-collapse: collapse; 
+    margin-top:20px; 
+}
+
+th, td { padding:12px; 
+    border-bottom:1px solid #ddd; 
+    text-align:left; 
+}
+
+th { background:#2563eb; 
+    color:white; 
+}
+
+.status-pendente { 
+    color:#f59e0b; 
+    font-weight:bold; 
+}
+
+.status-confirmado { 
+    color:#16a34a; 
+    font-weight:bold; 
+}
+
+.status-cancelado { 
+    color:#ef4444; 
+    font-weight:bold; 
+}
 </style>
 </head>
 <body>
 
 <header>
-<h1>Agendamentos do Petshop</h1>
+    <h1>Agendamentos do Petshop</h1>
+    <a href="dashboard_petshop.html" class="btn">Voltar</a>
 </header>
 
 <div class="container">

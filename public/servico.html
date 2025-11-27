@@ -5,16 +5,73 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Serviços Ativos</title>
 <style>
-body { font-family: Arial; background:#f3f4f6; margin:0; padding:0; }
-header { background:#2563eb; color:white; padding:20px; text-align:center; }
-.container { max-width:900px; margin:40px auto; background:white; padding:25px; border-radius:12px; box-shadow:0 3px 8px rgba(0,0,0,0.15); }
-h2 { margin-top:0; text-align:center; }
-.servico-card { border:1px solid #ddd; border-radius:10px; padding:15px; margin:10px 0; box-shadow:0 2px 5px rgba(0,0,0,0.1); position:relative; }
-.servico-card h3 { margin:0 0 10px 0; }
-.servico-card p { margin:5px 0; }
-.btn-agendar { display:inline-block; margin-top:10px; padding:8px 15px; background:#20bf6b; color:white; text-decoration:none; border-radius:6px; cursor:pointer; }
-.btn-agendar:hover { background:#17a65c; }
-.msg { color:red; text-align:center; margin-bottom:10px; }
+body { font-family: Arial; 
+    background:#f3f4f6; 
+    margin:0; 
+    padding:0; 
+}
+
+header {
+            background: #2874f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 22px;
+            font-weight: bold;  
+        }
+
+        header h1 {
+            font-size: 28px;
+            color: #ffffff;
+        }
+
+.container { 
+    max-width:900px; 
+    margin:40px auto; 
+    background:white; 
+    padding:25px; 
+    border-radius:12px; 
+    box-shadow:0 3px 8px rgba(0,0,0,0.15); 
+}
+h2 { 
+    margin-top:0; 
+    text-align:center; }
+
+.servico-card { 
+    border:1px solid #ddd; 
+    border-radius:10px; 
+    padding:15px; 
+    margin:10px 0; 
+    box-shadow:0 2px 5px rgba(0,0,0,0.1); 
+    position:relative; 
+}
+.servico-card h3 { 
+    margin:0 0 10px 0; 
+}
+
+.servico-card p { 
+    margin:5px 0; 
+}
+.btn-agendar { 
+    display:inline-block; 
+    margin-top:10px; 
+    padding:8px 15px; 
+    background:#20bf6b; 
+    color:white; 
+    text-decoration:none; 
+    border-radius:6px; 
+    cursor:pointer; }
+.btn-agendar:hover { 
+    background:#17a65c; 
+}
+.msg { 
+    color:red; 
+    text-align:center; 
+    margin-bottom:10px; 
+}
 
 .form-agendamento {
     margin-top:15px;
@@ -50,13 +107,27 @@ h2 { margin-top:0; text-align:center; }
     border-radius:6px;
     cursor:pointer;
 }
-.btn-confirmar:hover { background:#1d4ed8; }
+.btn-confirmar:hover { 
+    background:#1d4ed8; 
+}
+
+.btn {
+    padding: 12px 18px;
+    background: #20bf6b;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
 </style>
 </head>
 <body>
 
 <header>
   <h1>Serviços Ativos</h1>
+  <a href="index.html" class="btn">Voltar</a>
 </header>
 
 <div class="container">
