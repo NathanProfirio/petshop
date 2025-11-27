@@ -1,5 +1,6 @@
 import { pool } from '../config/db.js';
 
+
 // Criar serviço
 export async function criarServico(req, res) {
     try {
@@ -169,3 +170,29 @@ export async function obterServico(req, res) {
         res.status(500).json({ erro: "Erro no servidor" });
     }
 }
+// Obter serviço público por ID
+export async function obterServicoPublic(req, res) {
+    try {
+        const { id } = req.params;
+
+        const q = `
+            SELECT s.*, p.nome AS nome_petshop
+            FROM servico s
+            JOIN petshop p ON p.id_petshop = s.id_petshop
+            WHERE s.id_servico = $1 AND s.ativo = TRUE
+        `;
+
+        const r = await pool.query(q, [id]);
+
+        if (r.rowCount === 0) {
+            return res.status(404).json({ erro: "Serviço não encontrado" });
+        }
+
+        res.json(r.rows[0]);
+
+    } catch (err) {
+        console.error("Erro ao obter serviço público:", err);
+        res.status(500).json({ erro: "Erro no servidor" });
+    }
+}
+

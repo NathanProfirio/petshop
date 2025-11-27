@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Carrinho</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f6f6f6;
+        }
+
+        .topbar {
+            background: #4f46e5;
+            padding: 15px;
+            text-align: center;
+            color: white;
+        }
+
+        .cart-container {
+            max-width: 700px;
+            background: white;
+            margin: 30px auto;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .item {
+            display: flex;
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 10px;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid #eee;
+        }
+
+        .item img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .info h3 {
+            margin: 0 0 5px 0;
+        }
+
+        .info p {
+            margin: 2px 0;
+        }
+
+        .totals {
+            margin-top: 20px;
+            background: #f1f1ff;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #4f46e5;
+        }
+
+        .btn-finalizar {
+            width: 100%;
+            margin-top: 20px;
+            padding: 15px;
+            background: #22c55e;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-finalizar:hover {
+            background: #16a34a;
+        }
+    </style>
+</head>
+<body>
+
+<header class="topbar">
+    <h1>Meu Carrinho</h1>
+</header>
+
+<section class="cart-container">
+    <div id="cart-items" class="items"></div>
+
+    <div class="totals">
+        <p><strong>Subtotal geral:</strong> R$ <span id="subtotal">0.00</span></p>
+        <p><strong>Total de itens:</strong> <span id="quantidade">0</span></p>
+    </div>
+
+    <button class="btn-finalizar">Finalizar Compra</button>
+</section>
+
+<script>
+async function carregarCarrinho() {
+    const token = localStorage.getItem("token_cliente");
+
+    if (!token) {
+        alert("Você precisa estar logado.");
+        return location.href = "login_cliente.html";
+    }
+
+    try {
+        const response = await fetch("http://localhost:3000/carrinho", {
+            method: "GET",
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        const data = await response.json();
+        console.log("CARRINHO:", data);
+
+        if (!response.ok) {
+            return alert(data.error || "Erro ao carregar carrinho");
+        }
+
+        const container = document.getElementById("cart-items");
+        container.innerHTML = "";
+
+        let total = 0;
+
+        data.itens.forEach(item => {
+            const preco = Number(item.preco);
+            const qtd = Number(item.quantidade);
+            const subtotal = preco * qtd;
+
+            total += subtotal;
+
+            const div = document.createElement("div");
+            div.classList.add("item");
+
+            div.innerHTML = `
+                <img src="${item.imagem_url || 'https://via.placeholder.com/80'}">
+                <div class="info">
+                    <h3>${item.nome}</h3>
+                    <p>Quantidade: ${qtd}</p>
+                    <p>Preço: R$ ${preco.toFixed(2)}</p>
+                    <p>Subtotal: R$ ${subtotal.toFixed(2)}</p>
+                </div>
+            `;
+
+            container.appendChild(div);
+        });
+
+        document.getElementById("subtotal").textContent = total.toFixed(2);
+        document.getElementById("quantidade").textContent = data.quantidade_itens;
+
+    } catch (err) {
+        console.error("Erro:", err);
+        alert("Erro ao carregar carrinho");
+    }
+}
+
+carregarCarrinho();
+</script>
+
+</body>
+</html>
+a
+

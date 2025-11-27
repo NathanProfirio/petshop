@@ -1,152 +1,202 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Serviços Disponíveis</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Serviços Ativos</title>
+<style>
+body { font-family: Arial; background:#f3f4f6; margin:0; padding:0; }
+header { background:#2563eb; color:white; padding:20px; text-align:center; }
+.container { max-width:900px; margin:40px auto; background:white; padding:25px; border-radius:12px; box-shadow:0 3px 8px rgba(0,0,0,0.15); }
+h2 { margin-top:0; text-align:center; }
+.servico-card { border:1px solid #ddd; border-radius:10px; padding:15px; margin:10px 0; box-shadow:0 2px 5px rgba(0,0,0,0.1); position:relative; }
+.servico-card h3 { margin:0 0 10px 0; }
+.servico-card p { margin:5px 0; }
+.btn-agendar { display:inline-block; margin-top:10px; padding:8px 15px; background:#20bf6b; color:white; text-decoration:none; border-radius:6px; cursor:pointer; }
+.btn-agendar:hover { background:#17a65c; }
+.msg { color:red; text-align:center; margin-bottom:10px; }
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f9f9f9;
-            margin: 0;
-            padding: 0;
-        }
+.form-agendamento {
+    margin-top:15px;
+    padding:15px;
+    background:#f9fafb;
+    border:1px solid #ddd;
+    border-radius:8px;
+    display:none;
+}
 
-        header {
-            background: #4f46e5;
-            padding: 20px;
-            color: white;
-            text-align: center;
-        }
-        header {
-            background: #4f46e5;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
+.form-agendamento label {
+    display:block;
+    margin-top:10px;
+    font-weight:bold;
+}
 
-        header h1 {
-            font-size: 28px;
-            color: #ffffff;
-        }
+.form-agendamento input,
+.form-agendamento select {
+    width:100%;
+    padding:8px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:6px;
+}
 
-        h1 {
-            margin: 0;
-        }
-
-        .container {
-            padding: 20px;
-        }
-
-        .servicos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-        }
-
-        .card h3 {
-            margin: 0;
-            color: #333;
-        }
-
-        .card p {
-            font-size: 14px;
-            color: #555;
-        }
-
-        .price {
-            margin-top: 10px;
-            font-size: 18px;
-            color: #16a34a;
-            font-weight: bold;
-        }
-
-        .duration {
-            margin-top: 5px;
-            font-size: 14px;
-            color: #444;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 5px 12px;
-            margin-top: 10px;
-            background: #4f46e5;
-            color: white;
-            border-radius: 8px;
-            font-size: 12px;
-        }
-        .btn {
-            padding: 12px 18px;
-            background: #20bf6b;
-            color: white;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-
-            .btn:hover {
-                background: #17a65c;
-        }
-    </style>
+.btn-confirmar {
+    margin-top:15px;
+    width:100%;
+    background:#2563eb;
+    color:white;
+    padding:10px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+.btn-confirmar:hover { background:#1d4ed8; }
+</style>
 </head>
 <body>
 
 <header>
-    <h1>Serviços Disponíveis</h1>
-    <a class="btn" href="index.html">Voltar</a>
+  <h1>Serviços Ativos</h1>
 </header>
 
 <div class="container">
-    <div id="servicos" class="servicos-grid"></div>
+  <div id="msg" class="msg"></div>
+  <div id="listaServicos"></div>
 </div>
 
 <script>
-async function carregarServicosPublicos() {
+// Criar opções de horários 08:00 às 18:00
+function gerarHorarios() {
+    const horarios = [];
+    for (let h = 8; h <= 18; h++) {
+        let hora = h.toString().padStart(2, "0") + ":00";
+        horarios.push(hora);
+    }
+    return horarios;
+}
+
+async function carregarServicos() {
+    const container = document.getElementById("listaServicos");
+    const msg = document.getElementById("msg");
+    container.innerHTML = "";
+    msg.innerText = "";
+
     try {
-        const resposta = await fetch("http://localhost:3000/servico");
-        const dados = await resposta.json();
+        const res = await fetch("http://localhost:3000/servico");
 
-        const container = document.getElementById("servicos");
-        container.innerHTML = "";
-
-        if (dados.length === 0) {
-            container.innerHTML = "<p>Nenhum serviço disponível no momento.</p>";
+        if (!res.ok) {
+            const err = await res.json();
+            msg.innerText = err.error || "Erro ao carregar serviços.";
             return;
         }
 
-        dados.forEach(s => {
-            container.innerHTML += `
-                <div class="card">
-                    
-                    
-                    <h3>${s.nome}</h3>
-                    <span class="badge">Petshop: ${s.nome_petshop}</span>
-                    <p>${s.descricao}</p>
-                    
-                    <div class="price">R$ ${s.preco}</div>
-                    <div class="duration">Duração: ${s.duracao_minutos} min</div>
+        const servicos = await res.json();
+
+        if (servicos.length === 0) {
+            msg.innerText = "Nenhum serviço ativo encontrado.";
+            return;
+        }
+
+        servicos.forEach(s => {
+            const card = document.createElement("div");
+            card.className = "servico-card";
+
+            // Criar horários
+            const horarios = gerarHorarios();
+            let opcoesHorarios = "";
+            horarios.forEach(h => opcoesHorarios += `<option value="${h}">${h}</option>`);
+
+            card.innerHTML = `
+                <h3>${s.nome}</h3>
+                <p><strong>Petshop:</strong> ${s.nome_petshop}</p>
+                <p><strong>Descrição:</strong> ${s.descricao}</p>
+                <p><strong>Preço:</strong> R$ ${s.preco}</p>
+                <p><strong>Duração:</strong> ${s.duracao_minutos} minutos</p>
+
+                <button class="btn-agendar" onclick="abrirFormulario(${s.id_servico})">Agendar</button>
+
+                <div id="form-${s.id_servico}" class="form-agendamento">
+                    <label>Data:</label>
+                    <input type="date" id="data-${s.id_servico}" min="${new Date().toISOString().split("T")[0]}">
+
+                    <label>Horário:</label>
+                    <select id="horario-${s.id_servico}">
+                        ${opcoesHorarios}
+                    </select>
+
+                    <button class="btn-confirmar" onclick="confirmar(${s.id_servico})">Confirmar Agendamento</button>
                 </div>
             `;
+
+            container.appendChild(card);
         });
 
-    } catch (erro) {
-        console.error("Erro ao carregar serviços públicos:", erro);
+    } catch (e) {
+        console.error("Erro ao carregar serviços:", e);
+        msg.innerText = "Erro ao carregar serviços. Verifique se o backend está rodando.";
     }
 }
 
-carregarServicosPublicos();
+// Abre o formulário de agendamento
+function abrirFormulario(id) {
+    document.querySelectorAll(".form-agendamento").forEach(f => f.style.display = "none");
+    document.getElementById("form-" + id).style.display = "block";
+}
+
+async function confirmar(id_servico) {
+    const data = document.getElementById("data-" + id_servico).value;
+    const hora = document.getElementById("horario-" + id_servico).value;
+    const msg = document.getElementById("msg");
+
+    if (!data || !hora) {
+        msg.innerText = "Preencha data e horário!";
+        return;
+    }
+
+    const token = localStorage.getItem("token_cliente");
+
+    if (!token) {
+        alert("Você precisa estar logado para agendar.");
+        window.location.href = "login_cliente.html";
+        return;
+    }
+
+    try {
+        const res = await fetch("http://localhost:3000/agendamento", {
+            method: "POST",
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify({ 
+                id_servico,
+                data,      // <-- AGORA ESTÁ SENDO CERTO
+                hora       // <-- AGORA TAMBÉM
+            })
+        });
+
+        const json = await res.json();
+
+        if (!res.ok) {
+            msg.innerText = json.error || "Erro ao agendar.";
+            return;
+        }
+
+        alert("Agendamento realizado com sucesso!");
+        msg.innerText = "";
+    } catch (e) {
+        console.error(e);
+        msg.innerText = "Erro ao conectar com servidor.";
+    }
+}
+
+
+
+
+// Carregar serviços ao iniciar
+carregarServicos();
 </script>
 
 </body>
 </html>
+

@@ -67,7 +67,7 @@
 
 .preco {
     font-size: 1.4rem;
-    color: #0284ff;
+    color: #20bf6b;
     font-weight: 700;
     margin-bottom: 10px;
     display: block;
@@ -77,7 +77,7 @@
     display: block;
     width: 100%;
     text-align: center;
-    background: #0284ff;
+    background: #20bf6b;
     color: #fff;
     padding: 10px 0;
     border-radius: 10px;
@@ -88,7 +88,7 @@
 }
 
 .btn-ver:hover {
-    background: #006ed1;
+    background: #17a65c;
 }
 
 .frete {
@@ -166,7 +166,7 @@
     <section class="hero">
         <h1>O marketplace ideal para cuidar do seu pet ❤️</h1>
         <p>Encontre petshops, agende serviços e compre produtos em um só lugar.</p>
-        <a href="#" class="btn-cta">Explorar Petshops</a>
+        
     </section>
 
     <!-- Categorias -->
@@ -176,7 +176,7 @@
         <div class="cards">
             <div class="card">
                 <img src="https://cdn-icons-png.flaticon.com/512/194/194279.png" alt="">
-                <h3>Banho & Tosa</h3>
+                <h3>Serviços</h3>
             </div>
 
             <div class="card">
@@ -208,47 +208,77 @@
     </footer>
 
 <script>
-
 // =========================
 // 🔹 CONTROLE DE LOGIN / LOGOUT
 // =========================
 const nomeCliente = localStorage.getItem("cliente_nome");
-
-// ELEMENTOS
 const areaUsuario = document.getElementById("areaUsuario");
 const nomeUsuario = document.getElementById("nomeUsuario");
 const btnLogin = document.getElementById("btnLogin");
 const logoutBtn = document.getElementById("logoutBtn");
 
-// Se estiver logado
 if (nomeCliente) {
-    areaUsuario.style.display = "inline-block"; // mostra "Usuário: nome"
+    areaUsuario.style.display = "inline-block";
     nomeUsuario.textContent = nomeCliente;
 
-    btnLogin.style.display = "none"; // esconde botão Entrar
-    logoutBtn.style.display = "inline-block"; // mostra botão Sair
+    btnLogin.style.display = "none";
+    logoutBtn.style.display = "inline-block";
 } else {
-    // Se NÃO estiver logado
     areaUsuario.style.display = "none"; 
-    logoutBtn.style.display = "none"; // esconde botão Sair
-    btnLogin.style.display = "inline-block"; // mostra botão Entrar
+    logoutBtn.style.display = "none"; 
+    btnLogin.style.display = "inline-block";
 }
 
-// Botão sair
 logoutBtn.addEventListener("click", () => {
     localStorage.clear();
     window.location.reload();
 });
 
-
 // =========================
 // 🔹 CARRINHO
 // =========================
-function atualizarCarrinho() {
-    const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-    document.getElementById("cartCount").textContent = carrinho.length;
+async function atualizarCarrinho() {
+    const token = localStorage.getItem("token_cliente");
+    if (!token) {
+        document.getElementById("cartCount").textContent = 0;
+        return;
+    }
+
+    try {
+        const res = await fetch("http://localhost:3000/carrinho", {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+            // quantidade total de itens
+            document.getElementById("cartCount").textContent = data.quantidade_itens;
+        } else {
+            document.getElementById("cartCount").textContent = 0;
+        }
+
+    } catch (err) {
+        console.error("Erro ao atualizar carrinho:", err);
+        document.getElementById("cartCount").textContent = 0;
+    }
 }
+document.addEventListener("DOMContentLoaded", () => {
+    atualizarCarrinho();
+});
+
+
+// Chamada inicial
 atualizarCarrinho();
+
+// Função para adicionar produto ao carrinho
+function adicionarAoCarrinho(produto) {
+    const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    carrinho.push(produto);
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+    atualizarCarrinho(); // atualiza o número no header
+}
 
 // =========================
 // 🔹 PRODUTOS
@@ -257,7 +287,6 @@ async function carregarProdutos() {
     try {
         const res = await fetch('/produto');
         const produtos = await res.json();
-
         const lista = document.getElementById('lista-produtos');
         lista.innerHTML = '';
 
@@ -269,7 +298,9 @@ async function carregarProdutos() {
                     <h3>${p.nome}</h3>
                     <span class="preco">R$ ${p.preco}</span>
                     <span class="frete">Frete grátis</span>
-                    <a href="ver_produto.html?id=${p.id_produto}" class="btn-ver">Ver produto</a>
+                    <button class="btn-ver" onclick='adicionarAoCarrinho(${JSON.stringify(p)})'>
+                        Adicionar ao carrinho
+                    </button>
                 </div>
             </div>
             `;
@@ -282,6 +313,7 @@ async function carregarProdutos() {
 
 carregarProdutos();
 </script>
+
 
 </body>
 </html>

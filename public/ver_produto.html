@@ -27,7 +27,6 @@
             margin: auto;
         }
 
-        /* FOTO PRINCIPAL */
         .galeria {
             flex: 1;
         }
@@ -57,7 +56,6 @@
             border-color: #2874f0;
         }
 
-        /* INFO DO PRODUTO */
         .info-produto {
             flex: 1;
             background: #fff;
@@ -106,7 +104,6 @@
             background: #ff9800;
         }
 
-        /* DESCRIÇÃO */
         .descricao-box {
             max-width: 1200px;
             margin: 30px auto;
@@ -114,11 +111,6 @@
             padding: 25px;
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .descricao-box h3 {
-            margin-top: 0;
-            font-size: 22px;
         }
     </style>
 </head>
@@ -128,14 +120,11 @@
 <header>Marketplace Pet</header>
 
 <div class="container">
-    <!-- GALERIA -->
     <div class="galeria">
         <img id="foto-principal" class="foto-principal" src="" alt="Produto">
-
         <div id="miniaturas" class="miniaturas"></div>
     </div>
 
-    <!-- INFO -->
     <div class="info-produto">
         <div id="nome" class="titulo"></div>
 
@@ -144,17 +133,18 @@
         <span id="preco" class="preco"></span>
         <div class="frete">Frete grátis</div>
 
-        <button onclick="alert('Adicionado ao carrinho!')">Adicionar ao Carrinho</button>
+        <button id="btn-carrinho">Adicionar ao Carrinho</button>
     </div>
 </div>
 
-<!-- DESCRIÇÃO -->
 <div class="descricao-box">
     <h3>Descrição do Produto</h3>
     <p id="descricao"></p>
 </div>
 
 <script>
+    let produtoCarregado = null;
+
     async function carregarProduto() {
         const params = new URLSearchParams(location.search);
         const id = params.get("id");
@@ -162,32 +152,30 @@
         if (!id) return alert("ID do produto não encontrado na URL.");
 
         try {
-            const res = await fetch("/produto/" + id);
+            const res = await fetch("http://localhost:3000/produto/" + id);
             const p = await res.json();
+
+            produtoCarregado = p;
 
             document.getElementById("nome").innerText = p.nome;
             document.getElementById("preco").innerText = "R$ " + p.preco;
             document.getElementById("descricao").innerText = p.descricao;
 
-            // FOTO PRINCIPAL
             document.getElementById("foto-principal").src =
                 p.imagem_url || "https://placehold.co/600x400?text=Sem+Imagem";
 
-            // MINIATURAS (se houver mais imagens no futuro)
-            const boxThumb = document.getElementById("miniaturas");
-            boxThumb.innerHTML = "";
+            const mini = document.getElementById("miniaturas");
+            mini.innerHTML = "";
 
-            const listaImagens = [
-                p.imagem_url
-            ].filter(Boolean);
+            const listaImagens = [p.imagem_url].filter(Boolean);
 
             listaImagens.forEach(img => {
-                const mini = document.createElement("img");
-                mini.src = img;
-                mini.onclick = () => {
+                const m = document.createElement("img");
+                m.src = img;
+                m.onclick = () => {
                     document.getElementById("foto-principal").src = img;
                 };
-                boxThumb.appendChild(mini);
+                mini.appendChild(m);
             });
 
         } catch (err) {
@@ -195,6 +183,47 @@
             alert("Erro ao carregar o produto.");
         }
     }
+
+    async function adicionarAoCarrinho() {
+        if (!produtoCarregado) return alert("Produto não encontrado!");
+
+        const token = localStorage.getItem("token_cliente"); // 💥 CORRIGIDO
+
+        if (!token) {
+            alert("Você precisa estar logado para adicionar ao carrinho.");
+            return location.href = "login_cliente.html";
+        }
+
+        try {
+            const res = await fetch("http://localhost:3000/carrinho/adicionar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({
+                    id_produto: produtoCarregado.id_produto,
+                    quantidade: 1
+                })
+            });
+
+            const data = await res.json();
+            
+            console.log("RESPOSTA DO BACK:", data); // 👈 ADICIONE ISSO
+
+            if (!res.ok) {
+                return alert("Erro: " + (data.error || "Falha ao adicionar item"));
+            }
+
+            alert("Produto adicionado ao carrinho!");
+
+        } catch (err) {
+            console.error(err);
+            alert("Erro ao adicionar ao carrinho.");
+        }
+    }
+
+    document.getElementById("btn-carrinho").addEventListener("click", adicionarAoCarrinho);
 
     carregarProduto();
 </script>

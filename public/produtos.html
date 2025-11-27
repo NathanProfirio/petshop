@@ -127,6 +127,7 @@ async function carregarProdutos() {
 
         const container = document.getElementById("produtos");
         container.innerHTML = "";
+        console.log(dados);
 
         if (dados.length === 0) {
             container.innerHTML = "<p class='nenhum'>Nenhum produto cadastrado.</p>";
@@ -135,7 +136,7 @@ async function carregarProdutos() {
 
         dados.forEach(produto => {
             container.innerHTML += `
-                <div class="card">
+                <div class="card" onclick="window.location.href='ver_produto.html?id=${produto.id_produto}'">
                     <img src="${produto.imagem_url ? produto.imagem_url : 'img/sem-imagem.png'}" alt="Imagem do Produto">
                     <h3>${produto.nome}</h3>
                     <p class="descricao">${produto.descricao}</p>

@@ -1,14 +1,14 @@
 import express from "express";
 import authPetshop from "../middlewares/authPetshop.js";
-
-import {
+import { 
     criarServico,
     listarServicosPetshop,
     listarServicosPublic,
     atualizarServico,
     removerServico,
-    obterServico
-} from "../controllers/servicoController.js";
+    obterServico,
+    obterServicoPublic
+} from '../controllers/servicoController.js';
 
 const router = express.Router();
 
@@ -30,6 +30,8 @@ router.delete("/:id", authPetshop, removerServico);
 // 📌 Obter 1 serviço específico (necessário para edição)
 router.get("/:id", authPetshop, obterServico); 
 // 🔥 MOVIDO PARA O FINAL!
+
+router.get('/public/:id', obterServicoPublic);
 
 export default router;
 
