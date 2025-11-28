@@ -2,66 +2,210 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Petshop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Petshop - PetMarket</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-        .categorias {
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 0;
+}
+
+/* Navbar */
+.navbar {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+.navbar .logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navbar .logo i {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 1.6rem;
+}
+
+.btn-sair {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-sair:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+}
+
+.categorias {
     width: 90%;
     max-width: 1200px;
-    margin: 40px auto;
+    margin: 60px auto;
     text-align: center;
+    padding: 40px 20px;
 }
 
 .categorias h2 {
-    font-size: 28px;
-    margin-bottom: 25px;
-    font-weight: 600;
-    color: #1e293b;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
 }
 
-           .btn-sair {
-        background: #ef4444;
-        border: none;
-        padding: 10px 18px;
-        border-radius: 8px;
-        cursor: pointer;
-        color: white;
-        font-size: 15px;
-    }
-    .btn-sair:hover { background: #dc2626; }
-    .cards {
+.categorias h2 i {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
     margin-top: 20px;
 }
 
 .card {
     background: white;
-    padding: 30px 20px;
-    border-radius: 14px;
+    padding: 50px 30px;
+    border-radius: 20px;
     text-decoration: none;
     color: #1e293b;
-    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
-    transition: 0.25s;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border: 2px solid transparent;
+    min-width: 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
+.card:hover::before {
+    transform: scaleX(1);
+}
+
+.card-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+
+.card-icon i {
+    font-size: 2rem;
+    color: white;
+}
+
+.card:hover .card-icon {
+    transform: rotate(360deg) scale(1.1);
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.5);
 }
 
 .card h3 {
-    font-size: 22px;
-    margin-bottom: 10px;
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+    font-weight: 700;
+    color: #333;
 }
 
 .card p {
-    color: #475569;
-    font-size: 14px;
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.6;
 }
-/* HOVER LINDO */
+
 .card:hover {
-    transform: translateY(-6px);
-    border-color: #2563eb;
-    box-shadow: 0 8px 20px rgba(37,99,235,0.2);
+    transform: translateY(-12px) scale(1.02);
+    border-color: rgba(102, 126, 234, 0.3);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 15px 20px;
+    }
+    
+    .categorias {
+        width: 100%;
+        margin: 40px auto;
+        padding: 20px;
+    }
+    
+    .categorias h2 {
+        font-size: 1.8rem;
+    }
+    
+    .cards {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .card {
+        padding: 40px 25px;
+    }
 }
     </style>
 </head>
@@ -69,39 +213,47 @@
 <body>
 
 <header class="navbar">
-    <div class="logo">🐾 Painel Petshop</div>
+    <div class="logo">
+        <i class="fas fa-paw"></i> Painel Petshop
+    </div>
     <a href="login_petshop.html">
-        <button class="btn-sair">Sair</button>
+        <button class="btn-sair">
+            <i class="fas fa-sign-out-alt"></i> Sair
+        </button>
     </a>
 </header>
 
 <section class="categorias">
-
-    <h2>Painel do Petshop</h2>
+    <h2><i class="fas fa-tachometer-alt"></i> Painel do Petshop</h2>
 
     <div class="cards">
-
         <!-- Produtos -->
         <a href="painel_petshop.html" class="card">
+            <div class="card-icon">
+                <i class="fas fa-box"></i>
+            </div>
             <h3>Produtos</h3>
             <p>Gerencie seus produtos</p>
         </a>
 
         <!-- Serviços -->
         <a href="servico_petshop.html" class="card">
+            <div class="card-icon">
+                <i class="fas fa-concierge-bell"></i>
+            </div>
             <h3>Serviços</h3>
             <p>Gerencie serviços como banho e tosa</p>
         </a>
 
-
         <!-- Agendamentos -->
         <a href="agendamentos_petshop.html" class="card">
+            <div class="card-icon">
+                <i class="fas fa-calendar-check"></i>
+            </div>
             <h3>Agendamentos</h3>
             <p>Ver horários marcados</p>
         </a>
-
     </div>
-
 </section>
 
 </body>

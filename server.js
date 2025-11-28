@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import { pool } from "./src/config/db.js";
 import petshopAuthRoutes from "./src/routes/petshopAuthRoutes.js";
 import clienteAuthRoutes from "./src/routes/clienteAuthRoutes.js";
 import produtoRoutes from "./src/routes/produtoRoutes.js";
@@ -31,6 +32,26 @@ app.post("/teste", (req, res) => {
 
 
 app.get('/', (req, res) => res.json({ ok: true, message: 'API Petshop Marketplace' }));
+
+// Rota de teste de conexão com o banco de dados RDS
+app.get('/test-db', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT version()');
+    const { version } = result.rows[0];
+    res.status(200).json({ 
+      success: true, 
+      message: 'Conexão com o banco de dados estabelecida com sucesso!',
+      version: version 
+    });
+  } catch (error) {
+    console.error('Erro ao conectar com o banco de dados:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Erro ao conectar com o banco de dados',
+      error: error.message 
+    });
+  }
+});
 
 
 app.use('/petshop', petshopAuthRoutes);

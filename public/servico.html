@@ -3,137 +3,370 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Serviços Ativos</title>
+<title>Serviços Ativos - PetMarket</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
 <style>
-body { font-family: Arial; 
-    background:#f3f4f6; 
-    margin:0; 
-    padding:0; 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-header {
-            background: #2874f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            color: #fff;
-            padding: 15px 30px;
-            font-size: 22px;
-            font-weight: bold;  
-        }
+body { 
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    margin: 0; 
+    padding: 0; 
+}
 
-        header h1 {
-            font-size: 28px;
-            color: #ffffff;
-        }
+/* Header Section */
+.servicos-header {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px 40px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.servicos-header-content {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.servicos-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.servicos-header h1 i {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.btn-voltar {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-voltar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
 
 .container { 
-    max-width:900px; 
-    margin:40px auto; 
-    background:white; 
-    padding:25px; 
-    border-radius:12px; 
-    box-shadow:0 3px 8px rgba(0,0,0,0.15); 
+    max-width: 1200px; 
+    margin: 0 auto 60px; 
+    padding: 40px 20px; 
 }
-h2 { 
-    margin-top:0; 
-    text-align:center; }
+
+.servicos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+}
 
 .servico-card { 
-    border:1px solid #ddd; 
-    border-radius:10px; 
-    padding:15px; 
-    margin:10px 0; 
-    box-shadow:0 2px 5px rgba(0,0,0,0.1); 
-    position:relative; 
+    background: white;
+    border: 2px solid transparent;
+    border-radius: 20px; 
+    padding: 25px; 
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1); 
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+
+.servico-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
 .servico-card h3 { 
-    margin:0 0 10px 0; 
+    margin: 0 0 15px 0;
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.servico-card h3 i {
+    color: #667eea;
+    font-size: 1.3rem;
 }
 
 .servico-card p { 
-    margin:5px 0; 
+    margin: 10px 0;
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.6;
 }
+
+.servico-card p strong {
+    color: #333;
+    font-weight: 600;
+}
+
+.servico-card .preco {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #20bf6b 0%, #17a65c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+    margin: 15px 0;
+}
+
 .btn-agendar { 
-    display:inline-block; 
-    margin-top:10px; 
-    padding:8px 15px; 
-    background:#20bf6b; 
-    color:white; 
-    text-decoration:none; 
-    border-radius:6px; 
-    cursor:pointer; }
-.btn-agendar:hover { 
-    background:#17a65c; 
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 15px; 
+    padding: 12px 24px; 
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; 
+    text-decoration: none; 
+    border-radius: 25px; 
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
+
+.btn-agendar:hover { 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
 .msg { 
-    color:red; 
-    text-align:center; 
-    margin-bottom:10px; 
+    background: white;
+    color: #e74c3c;
+    text-align: center; 
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    font-weight: 500;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.msg.success {
+    color: #20bf6b;
+    background: #f0fdf4;
+}
+
+.msg.empty {
+    color: #666;
+    background: white;
+    padding: 60px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.msg.empty i {
+    font-size: 4rem;
+    color: #ccc;
+}
+
+.agendamento-info {
+    margin-top: 15px;
+    padding: 15px;
+    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    border: 2px solid #4caf50;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #2e7d32;
+    font-weight: 600;
+}
+
+.agendamento-info i {
+    font-size: 1.2rem;
+    color: #4caf50;
 }
 
 .form-agendamento {
-    margin-top:15px;
-    padding:15px;
-    background:#f9fafb;
-    border:1px solid #ddd;
-    border-radius:8px;
-    display:none;
+    margin-top: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px solid rgba(102, 126, 234, 0.2);
+    border-radius: 15px;
+    display: none;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
 .form-agendamento label {
-    display:block;
-    margin-top:10px;
-    font-weight:bold;
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 0.95rem;
 }
 
 .form-agendamento input,
 .form-agendamento select {
-    width:100%;
-    padding:8px;
-    margin-top:5px;
-    border:1px solid #ccc;
-    border-radius:6px;
+    width: 100%;
+    padding: 12px 15px;
+    margin-top: 5px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.form-agendamento input:focus,
+.form-agendamento select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .btn-confirmar {
-    margin-top:15px;
-    width:100%;
-    background:#2563eb;
-    color:white;
-    padding:10px;
-    border:none;
-    border-radius:6px;
-    cursor:pointer;
-}
-.btn-confirmar:hover { 
-    background:#1d4ed8; 
-}
-
-.btn {
-    padding: 12px 18px;
-    background: #20bf6b;
+    margin-top: 20px;
+    width: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 500;
-    transition: 0.2s;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
 
+.btn-confirmar:hover { 
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+@media (max-width: 768px) {
+    .servicos-header {
+        padding: 20px;
+    }
+    
+    .servicos-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .servicos-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .container {
+        padding: 20px;
+    }
+}
 </style>
 </head>
 <body>
 
-<header>
-  <h1>Serviços Ativos</h1>
-  <a href="index.html" class="btn">Voltar</a>
+<!-- Navbar -->
+<header class="navbar">
+    <div class="logo">
+        <i class="fas fa-paw"></i> PetMarket
+    </div>
+    <nav>
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="produtos.html"><i class="fas fa-box"></i> Produtos</a>
+        <a href="servico.html"><i class="fas fa-concierge-bell"></i> Serviços</a>
+        <a href="carrinho.html" id="cart" class="carrinho">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cartCount" class="numero-carrinho">0</span>
+        </a>
+        <button id="logoutBtn" class="btn-login">
+            <i class="fas fa-sign-out-alt"></i> Sair
+        </button>
+        <a href="login_cliente.html" class="btn-login" id="btnLogin">
+            <i class="fas fa-sign-in-alt"></i> Entrar
+        </a>
+    </nav>
 </header>
 
+<!-- Header Section -->
+<section class="servicos-header">
+    <div class="servicos-header-content">
+        <h1><i class="fas fa-concierge-bell"></i> Serviços Ativos</h1>
+        <a href="index.html" class="btn-voltar">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </a>
+    </div>
+</section>
+
 <div class="container">
-  <div id="msg" class="msg"></div>
-  <div id="listaServicos"></div>
+  <div id="msg" class="msg" style="display: none;"></div>
+  <div id="listaServicos" class="servicos-grid"></div>
 </div>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-logo">
+            <div class="logo">🐾 PetMarket</div>
+        </div>
+        <div class="footer-info">
+            <p>© Copyright 2025 – PetMarket – Todos os direitos reservados PetMarket Serviços Digitais S.A.</p>
+            <p>CNPJ 12.345.678/0001-90 / Rua Ceara, nº 1200, Bairro Centro, Imperatriz/MA – CEP 01.234-567</p>
+        </div>
+        <div class="footer-links">
+            <a href="#">Termos e condições de uso</a>
+            <a href="#">Código de conduta</a>
+            <a href="#">Privacidade</a>
+            <a href="#">Dicas de segurança</a>
+        </div>
+    </div>
+</footer>
 
 <script>
 // Criar opções de horários 08:00 às 18:00
@@ -150,27 +383,87 @@ async function carregarServicos() {
     const container = document.getElementById("listaServicos");
     const msg = document.getElementById("msg");
     container.innerHTML = "";
-    msg.innerText = "";
+    msg.style.display = "none";
+    msg.className = "msg";
 
     try {
+        container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; background: white; border-radius: 20px; box-shadow: 0 5px 25px rgba(0,0,0,0.1);">
+                <i class="fas fa-spinner" style="font-size: 3rem; color: #667eea; animation: spin 1s linear infinite;"></i>
+                <p style="margin-top: 20px; color: #667eea; font-size: 1.2rem;">Carregando serviços...</p>
+            </div>
+        `;
+
         const res = await fetch("http://localhost:3000/servico");
 
         if (!res.ok) {
             const err = await res.json();
-            msg.innerText = err.error || "Erro ao carregar serviços.";
+            container.innerHTML = "";
+            msg.className = "msg";
+            msg.style.display = "flex";
+            msg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${err.error || "Erro ao carregar serviços."}`;
             return;
         }
 
         const servicos = await res.json();
+        
+        // Buscar agendamentos do cliente se estiver logado
+        let agendamentos = [];
+        const token = localStorage.getItem("token_cliente");
+        if (token) {
+            try {
+                const resAgendamentos = await fetch("http://localhost:3000/agendamento", {
+                    headers: { "Authorization": "Bearer " + token }
+                });
+                if (resAgendamentos.ok) {
+                    agendamentos = await resAgendamentos.json();
+                }
+            } catch (e) {
+                console.error("Erro ao buscar agendamentos:", e);
+            }
+        }
 
         if (servicos.length === 0) {
-            msg.innerText = "Nenhum serviço ativo encontrado.";
+            container.innerHTML = `
+                <div class="msg empty" style="grid-column: 1/-1; display: flex;">
+                    <i class="fas fa-concierge-bell"></i>
+                    <p>Nenhum serviço ativo encontrado.</p>
+                </div>
+            `;
             return;
         }
+
+        container.innerHTML = "";
 
         servicos.forEach(s => {
             const card = document.createElement("div");
             card.className = "servico-card";
+            card.id = `card-${s.id_servico}`;
+
+            // Verificar se há agendamento para este serviço
+            const agendamento = agendamentos.find(a => a.id_servico === s.id_servico);
+            const temAgendamento = agendamento && agendamento.data_hora;
+            
+            // Formatar data e hora se houver agendamento
+            let infoAgendamento = "";
+            if (temAgendamento) {
+                const dataHora = new Date(agendamento.data_hora);
+                const dataFormatada = dataHora.toLocaleDateString('pt-BR', { 
+                    day: '2-digit', 
+                    month: '2-digit', 
+                    year: 'numeric' 
+                });
+                const horaFormatada = dataHora.toLocaleTimeString('pt-BR', { 
+                    hour: '2-digit', 
+                    minute: '2-digit' 
+                });
+                infoAgendamento = `
+                    <div class="agendamento-info">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Agendado para: ${dataFormatada} às ${horaFormatada}</span>
+                    </div>
+                `;
+            }
 
             // Criar horários
             const horarios = gerarHorarios();
@@ -178,25 +471,34 @@ async function carregarServicos() {
             horarios.forEach(h => opcoesHorarios += `<option value="${h}">${h}</option>`);
 
             card.innerHTML = `
-                <h3>${s.nome}</h3>
-                <p><strong>Petshop:</strong> ${s.nome_petshop}</p>
-                <p><strong>Descrição:</strong> ${s.descricao}</p>
-                <p><strong>Preço:</strong> R$ ${s.preco}</p>
-                <p><strong>Duração:</strong> ${s.duracao_minutos} minutos</p>
+                <h3><i class="fas fa-spa"></i> ${s.nome}</h3>
+                <p><strong><i class="fas fa-store"></i> Petshop:</strong> ${s.nome_petshop}</p>
+                <p><strong><i class="fas fa-info-circle"></i> Descrição:</strong> ${s.descricao || 'Sem descrição'}</p>
+                <span class="preco">R$ ${parseFloat(s.preco).toFixed(2).replace('.', ',')}</span>
+                <p><strong><i class="fas fa-clock"></i> Duração:</strong> ${s.duracao_minutos} minutos</p>
 
-                <button class="btn-agendar" onclick="abrirFormulario(${s.id_servico})">Agendar</button>
+                ${infoAgendamento}
 
-                <div id="form-${s.id_servico}" class="form-agendamento">
-                    <label>Data:</label>
-                    <input type="date" id="data-${s.id_servico}" min="${new Date().toISOString().split("T")[0]}">
+                ${!temAgendamento ? `
+                    <button class="btn-agendar" onclick="abrirFormulario(${s.id_servico})">
+                        <i class="fas fa-calendar-plus"></i> Agendar
+                    </button>
 
-                    <label>Horário:</label>
-                    <select id="horario-${s.id_servico}">
-                        ${opcoesHorarios}
-                    </select>
+                    <div id="form-${s.id_servico}" class="form-agendamento">
+                        <label><i class="fas fa-calendar"></i> Data:</label>
+                        <input type="date" id="data-${s.id_servico}" min="${new Date().toISOString().split("T")[0]}" required>
 
-                    <button class="btn-confirmar" onclick="confirmar(${s.id_servico})">Confirmar Agendamento</button>
-                </div>
+                        <label><i class="fas fa-clock"></i> Horário:</label>
+                        <select id="horario-${s.id_servico}" required>
+                            <option value="">Selecione um horário</option>
+                            ${opcoesHorarios}
+                        </select>
+
+                        <button class="btn-confirmar" onclick="confirmar(${s.id_servico})">
+                            <i class="fas fa-check"></i> Confirmar Agendamento
+                        </button>
+                    </div>
+                ` : ''}
             `;
 
             container.appendChild(card);
@@ -204,7 +506,10 @@ async function carregarServicos() {
 
     } catch (e) {
         console.error("Erro ao carregar serviços:", e);
-        msg.innerText = "Erro ao carregar serviços. Verifique se o backend está rodando.";
+        container.innerHTML = "";
+        msg.className = "msg";
+        msg.style.display = "flex";
+        msg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Erro ao carregar serviços. Verifique se o backend está rodando.`;
     }
 }
 
@@ -220,7 +525,10 @@ async function confirmar(id_servico) {
     const msg = document.getElementById("msg");
 
     if (!data || !hora) {
-        msg.innerText = "Preencha data e horário!";
+        msg.className = "msg";
+        msg.style.display = "flex";
+        msg.innerHTML = `<i class="fas fa-exclamation-circle"></i> Preencha data e horário!`;
+        msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
     }
 
@@ -233,6 +541,11 @@ async function confirmar(id_servico) {
     }
 
     try {
+        const btnConfirmar = document.querySelector(`#form-${id_servico} .btn-confirmar`);
+        const originalText = btnConfirmar.innerHTML;
+        btnConfirmar.disabled = true;
+        btnConfirmar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Agendando...';
+
         const res = await fetch("http://localhost:3000/agendamento", {
             method: "POST",
             headers: { 
@@ -241,31 +554,138 @@ async function confirmar(id_servico) {
             },
             body: JSON.stringify({ 
                 id_servico,
-                data,      // <-- AGORA ESTÁ SENDO CERTO
-                hora       // <-- AGORA TAMBÉM
+                data,
+                hora
             })
         });
 
         const json = await res.json();
 
         if (!res.ok) {
-            msg.innerText = json.error || "Erro ao agendar.";
+            msg.className = "msg";
+            msg.style.display = "flex";
+            msg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${json.error || "Erro ao agendar."}`;
+            btnConfirmar.disabled = false;
+            btnConfirmar.innerHTML = originalText;
+            msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
             return;
         }
 
-        alert("Agendamento realizado com sucesso!");
-        msg.innerText = "";
+        msg.className = "msg success";
+        msg.style.display = "flex";
+        msg.innerHTML = `<i class="fas fa-check-circle"></i> Agendamento realizado com sucesso!`;
+        
+        // Atualizar o card para mostrar a data e hora agendada
+        const card = document.getElementById(`card-${id_servico}`);
+        if (card) {
+            const dataFormatada = new Date(data).toLocaleDateString('pt-BR', { 
+                day: '2-digit', 
+                month: '2-digit', 
+                year: 'numeric' 
+            });
+            
+            // Remover botão e formulário
+            const btnAgendar = card.querySelector('.btn-agendar');
+            const formAgendamento = card.querySelector('.form-agendamento');
+            if (btnAgendar) btnAgendar.remove();
+            if (formAgendamento) formAgendamento.remove();
+            
+            // Adicionar informação de agendamento
+            const infoAgendamento = document.createElement('div');
+            infoAgendamento.className = 'agendamento-info';
+            infoAgendamento.innerHTML = `
+                <i class="fas fa-calendar-check"></i>
+                <span>Agendado para: ${dataFormatada} às ${hora}</span>
+            `;
+            
+            // Inserir antes do último elemento (ou no final do card)
+            const duracao = card.querySelector('p:last-of-type');
+            if (duracao) {
+                duracao.insertAdjacentElement('afterend', infoAgendamento);
+            } else {
+                card.appendChild(infoAgendamento);
+            }
+        }
+        
+        btnConfirmar.disabled = false;
+        btnConfirmar.innerHTML = originalText;
+        msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        setTimeout(() => {
+            msg.style.display = "none";
+        }, 3000);
     } catch (e) {
         console.error(e);
-        msg.innerText = "Erro ao conectar com servidor.";
+        msg.className = "msg";
+        msg.style.display = "flex";
+        msg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Erro ao conectar com servidor.`;
+        msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 }
 
 
 
 
-// Carregar serviços ao iniciar
-carregarServicos();
+// =========================
+// 🔹 CONTROLE DE LOGIN / LOGOUT
+// =========================
+const nomeCliente = localStorage.getItem("cliente_nome");
+const btnLogin = document.getElementById("btnLogin");
+const logoutBtn = document.getElementById("logoutBtn");
+
+if (nomeCliente) {
+    btnLogin.style.display = "none";
+    if (logoutBtn) logoutBtn.style.display = "inline-block";
+} else {
+    if (logoutBtn) logoutBtn.style.display = "none"; 
+    btnLogin.style.display = "inline-block";
+}
+
+if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+        localStorage.clear();
+        window.location.reload();
+    });
+}
+
+// =========================
+// 🔹 CARRINHO
+// =========================
+async function atualizarCarrinho() {
+    const token = localStorage.getItem("token_cliente");
+    if (!token) {
+        const cartCount = document.getElementById("cartCount");
+        if (cartCount) cartCount.textContent = 0;
+        return;
+    }
+
+    try {
+        const res = await fetch("http://localhost:3000/carrinho", {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+        const data = await res.json();
+
+        const cartCount = document.getElementById("cartCount");
+        if (cartCount) {
+            if (res.ok) {
+                cartCount.textContent = data.quantidade_itens;
+            } else {
+                cartCount.textContent = 0;
+            }
+        }
+    } catch (err) {
+        console.error("Erro ao atualizar carrinho:", err);
+        const cartCount = document.getElementById("cartCount");
+        if (cartCount) cartCount.textContent = 0;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    atualizarCarrinho();
+    carregarServicos();
+});
 </script>
 
 </body>

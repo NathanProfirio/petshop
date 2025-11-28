@@ -2,142 +2,621 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastro de Petshop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Petshop - PetShop Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background: #f2f2f2;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
         }
 
-        .container {
+        .register-container {
+            width: 100%;
+            max-width: 500px;
             background: white;
-            width: 420px;
             padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 0 12px rgba(0,0,0,0.15);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.5s ease-out;
+            margin: auto;
         }
 
-        h2 {
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .register-header {
             text-align: center;
             margin-bottom: 20px;
         }
 
-        label {
-            font-weight: bold;
-            margin: 8px 0 4px;
+        .register-header .icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .register-header .icon i {
+            font-size: 28px;
+            color: white;
+        }
+
+        .register-header h2 {
+            color: #333;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .register-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            color: #555;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 16px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 14px 12px 45px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #bbb;
+        }
+
+        .form-group input.error {
+            border-color: #f44336;
+        }
+
+        .form-group input.valid {
+            border-color: #4caf50;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        .password-toggle:hover {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .password-toggle:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .password-toggle i {
             display: block;
         }
 
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-
-        button {
+        .submit-btn {
             width: 100%;
             padding: 12px;
-            border: none;
-            background: #20bf6b;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
+            border: none;
+            border-radius: 10px;
             font-size: 16px;
-            border-radius: 6px;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+            margin-top: 6px;
         }
 
-        button:hover {
-            background: #17a65c;
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
         }
 
-        #msg {
-            margin-top: 12px;
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .submit-btn .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
+        }
+
+        .submit-btn.loading .spinner {
+            display: block;
+        }
+
+        .submit-btn.loading .btn-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .msg {
             text-align: center;
-            font-weight: bold;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .msg.error {
+            background: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
+        }
+
+        .msg.success {
+            background: #efe;
+            color: #3c3;
+            border: 1px solid #cfc;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 16px 0;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
+        }
+
+        .divider span {
+            padding: 0 15px;
+        }
+
+        .links {
+            text-align: center;
+        }
+
+        .link-item {
+            margin-top: 12px;
+        }
+
+        .link-item a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .link-item a:hover {
+            color: #764ba2;
+            transform: translateX(3px);
+        }
+
+        .link-item a i {
+            font-size: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .register-container {
+                padding: 30px 20px;
+            }
+
+            .register-header h2 {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="register-container">
+        <div class="register-header">
+            <div class="icon">
+                <i class="fas fa-store"></i>
+            </div>
+            <h2>Cadastrar Petshop</h2>
+            <p>Crie sua conta e comece a oferecer seus serviços</p>
+        </div>
+        
+        <form id="registerForm">
+            <div class="form-group">
+                <label for="nome">Nome do Petshop</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-store"></i>
+                    <input 
+                        type="text" 
+                        id="nome" 
+                        placeholder="Nome do seu petshop" 
+                        required
+                        autocomplete="organization"
+                    >
+                </div>
+            </div>
 
-<div class="container">
-    <h2>Cadastrar Petshop</h2>
+            <div class="form-group">
+                <label for="cnpj">CNPJ</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-id-card"></i>
+                    <input 
+                        type="text" 
+                        id="cnpj" 
+                        placeholder="00.000.000/0000-00" 
+                        required
+                        maxlength="18"
+                    >
+                </div>
+            </div>
 
-    <form id="formCadastro">
-        <label>Nome do Petshop</label>
-        <input type="text" id="nome" required>
+            <div class="form-group">
+                <label for="endereco">Endereço</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <input 
+                        type="text" 
+                        id="endereco" 
+                        placeholder="Rua, número, bairro, cidade" 
+                        required
+                        autocomplete="street-address"
+                    >
+                </div>
+            </div>
 
-        <label>CNPJ</label>
-        <input type="text" id="cnpj" required>
+            <div class="form-group">
+                <label for="telefone">Telefone</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-phone"></i>
+                    <input 
+                        type="tel" 
+                        id="telefone" 
+                        placeholder="(00) 00000-0000" 
+                        autocomplete="tel"
+                    >
+                </div>
+            </div>
 
-        <label>Endereço</label>
-        <input type="text" id="endereco" required>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-envelope"></i>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        placeholder="seu@email.com" 
+                        required
+                        autocomplete="email"
+                    >
+                </div>
+            </div>
 
-        <label>Telefone</label>
-        <input type="text" id="telefone">
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock"></i>
+                    <input 
+                        type="password" 
+                        id="senha" 
+                        placeholder="Digite sua senha" 
+                        required
+                        autocomplete="new-password"
+                        minlength="6"
+                    >
+                    <button type="button" class="password-toggle" id="togglePassword">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
 
-        <label>Email</label>
-        <input type="email" id="email" required>
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <span class="btn-text">Cadastrar</span>
+                <div class="spinner"></div>
+            </button>
+        </form>
 
-        <label>Senha</label>
-        <input type="password" id="senha" required>
+        <div class="msg" id="msg"></div>
 
-        <button type="submit">Cadastrar</button>
-    </form>
-    <div class="link">
-        Já possui conta? <a href="login_petshop.html">Entrar</a>
+        <div class="divider">
+            <span>ou</span>
+        </div>
+
+        <div class="links">
+            <div class="link-item">
+                <a href="login_petshop.html">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Já possui conta? Entrar
+                </a>
+            </div>
+            <div class="link-item">
+                <a href="index.html">
+                    <i class="fas fa-home"></i>
+                    Voltar para o início
+                </a>
+            </div>
+        </div>
     </div>
-    <div id="msg"></div>
-</div>
 
-<script>
-    const API_URL = "http://localhost:3000/petshop/register"; // ajuste se necessário
+    <script>
+        // Toggle password visibility
+        const togglePassword = document.getElementById('togglePassword');
+        const senhaInput = document.getElementById('senha');
 
-    document.getElementById("formCadastro").addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const dados = {
-            nome: document.getElementById("nome").value,
-            cnpj: document.getElementById("cnpj").value,
-            endereco: document.getElementById("endereco").value,
-            telefone: document.getElementById("telefone").value,
-            email: document.getElementById("email").value,
-            senha: document.getElementById("senha").value
-        };
-
-        try {
-            const resposta = await fetch(API_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(dados)
-            });
-
-            const json = await resposta.json();
-
-            if (resposta.ok) {
-                document.getElementById("msg").style.color = "green";
-                document.getElementById("msg").innerText = "Petshop cadastrado com sucesso! Redirecionando...";
-
-                // Redireciona para a tela de login em 1.5 segundos
-                setTimeout(() => {
-                    window.location.href = "login_petshop.html";
-                }, 1500);
-                
+        togglePassword.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const type = senhaInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            senhaInput.setAttribute('type', type);
+            
+            const icon = this.querySelector('i');
+            if (type === 'text') {
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
             } else {
-                document.getElementById("msg").style.color = "red";
-                document.getElementById("msg").innerText = json.error || "Erro ao cadastrar.";
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+
+        // CNPJ mask
+        const cnpjInput = document.getElementById('cnpj');
+        cnpjInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 14) {
+                value = value.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2}).*/, '$1.$2.$3/$4-$5');
+                e.target.value = value;
+            }
+        });
+
+        // Phone mask
+        const telefoneInput = document.getElementById('telefone');
+        telefoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length <= 11) {
+                if (value.length <= 10) {
+                    value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
+                } else {
+                    value = value.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
+                }
+                e.target.value = value;
+            }
+        });
+
+        // Form submission
+        const registerForm = document.getElementById('registerForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const msgDiv = document.getElementById('msg');
+
+        registerForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const nome = document.getElementById('nome').value.trim();
+            const cnpj = document.getElementById('cnpj').value.replace(/\D/g, '');
+            const endereco = document.getElementById('endereco').value.trim();
+            const telefone = document.getElementById('telefone').value.replace(/\D/g, '');
+            const email = document.getElementById('email').value.trim();
+            const senha = document.getElementById('senha').value;
+
+            // Reset message
+            msgDiv.className = 'msg';
+            msgDiv.innerText = '';
+
+            // Basic validation
+            if (!nome || !cnpj || !endereco || !email || !senha) {
+                msgDiv.className = 'msg error';
+                msgDiv.innerText = 'Por favor, preencha todos os campos obrigatórios.';
+                return;
             }
 
-        } catch (err) {
-            document.getElementById("msg").style.color = "red";
-            document.getElementById("msg").innerText = "Erro de conexão com o servidor.";
-        }
-    });
-</script>
+            // Validação de CNPJ
+            if (cnpj.length !== 14) {
+                msgDiv.className = 'msg error';
+                msgDiv.innerText = 'CNPJ deve ter 14 dígitos.';
+                return;
+            }
 
+            // Validação de email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                msgDiv.className = 'msg error';
+                msgDiv.innerText = 'Por favor, insira um email válido.';
+                return;
+            }
+
+            // Validação de senha
+            if (senha.length < 6) {
+                msgDiv.className = 'msg error';
+                msgDiv.innerText = 'A senha deve ter no mínimo 6 caracteres.';
+                return;
+            }
+
+            // Disable button and show loading
+            submitBtn.disabled = true;
+            submitBtn.classList.add('loading');
+
+            try {
+                const resp = await fetch("http://localhost:3000/petshop/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ nome, cnpj, endereco, telefone, email, senha })
+                });
+
+                // Verificar se a resposta é JSON válido
+                let data;
+                const contentType = resp.headers.get("content-type");
+                if (contentType && contentType.includes("application/json")) {
+                    data = await resp.json();
+                } else {
+                    const text = await resp.text();
+                    console.error("Resposta não é JSON:", text);
+                    throw new Error("Resposta inválida do servidor");
+                }
+
+                if (!resp.ok) {
+                    msgDiv.className = 'msg error';
+                    const errorMsg = data.error || data.message || "Erro ao cadastrar. Tente novamente.";
+                    msgDiv.innerText = errorMsg;
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('loading');
+                    return;
+                }
+
+                msgDiv.className = 'msg success';
+                msgDiv.innerText = "Cadastro realizado com sucesso! Redirecionando para o login...";
+                
+                // Redirecionar após 2 segundos
+                setTimeout(() => {
+                    window.location.href = "login_petshop.html";
+                }, 2000);
+
+            } catch (error) {
+                console.error('Erro completo:', error);
+                msgDiv.className = 'msg error';
+                
+                // Mensagens de erro mais específicas
+                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                    msgDiv.innerText = "Erro de conexão. Verifique se o servidor está rodando.";
+                } else if (error.message.includes('JSON')) {
+                    msgDiv.innerText = "Erro ao processar resposta do servidor.";
+                } else {
+                    msgDiv.innerText = "Erro ao cadastrar. Tente novamente.";
+                }
+                
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('loading');
+            }
+        });
+
+        // Real-time validation feedback
+        const inputs = document.querySelectorAll('input[required]');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.value.trim() === '') {
+                    this.classList.add('error');
+                    this.classList.remove('valid');
+                } else {
+                    this.classList.remove('error');
+                    this.classList.add('valid');
+                }
+            });
+
+            input.addEventListener('input', function() {
+                if (this.value.trim() !== '') {
+                    this.classList.remove('error');
+                }
+            });
+        });
+
+        // Auto-focus no primeiro campo
+        document.getElementById('nome').focus();
+    </script>
 </body>
 </html>

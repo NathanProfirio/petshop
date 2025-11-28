@@ -2,253 +2,597 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Produto | 🐾 PetMarket</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produto - PetMarket</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #f5f5f5;
-        }
-        header {
-            background: #2874f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            color: #fff;
-            padding: 15px 30px;
-            font-size: 22px;
-            font-weight: bold;  
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-        header h1 {
-            font-size: 28px;
-            color: #333;
-        }
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
 
-        .container {
-            display: flex;
-            gap: 40px;
-            padding: 30px;
-            max-width: 1200px;
-            margin: auto;
-        }
+/* Navbar */
+.navbar {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
 
-        .galeria {
-            flex: 1;
-        }
+.navbar .logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
-        .foto-principal {
-            width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
+.navbar nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
 
-        .miniaturas {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
+.navbar nav a {
+    text-decoration: none;
+    color: #444;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    border-radius: 8px;
+}
 
-        .miniaturas img {
-            width: 90px;
-            height: 90px;
-            border-radius: 8px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            object-fit: cover;
-        }
+.navbar nav a:hover {
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.1);
+}
 
-        .miniaturas img:hover {
-            border-color: #2874f0;
-        }
+.carrinho {
+    font-size: 22px; 
+    cursor: pointer; 
+    position: relative;
+    color: #444;
+    transition: all 0.3s ease;
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
 
-        .info-produto {
-            flex: 1;
-            background: #fff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
+.carrinho:hover {
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.1);
+}
 
-        .titulo {
-            font-size: 26px;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
+.numero-carrinho {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; 
+    font-size: 11px; 
+    font-weight: 700;
+    padding: 3px 7px; 
+    border-radius: 50%; 
+    position: absolute; 
+    top: 2px; 
+    right: 2px;
+    min-width: 20px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+}
 
-        .avaliacao {
-            color: #fbc02d;
-            margin-bottom: 15px;
-        }
+.btn-voltar {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
-        .preco {
-            display: block;
-            font-size: 34px;
-            color: #2874f0;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
+.btn-voltar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
 
-        .frete {
-            color: green;
-            font-size: 16px;
-            margin-bottom: 20px;
-        }
+.btn-login {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff !important;
+    padding: 10px 20px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
 
-        button {
-            width: 100%;
-            padding: 16px;
-            background: #ffb000;
-            border: none;
-            border-radius: 10px;
-            font-size: 20px;
-            cursor: pointer;
-            font-weight: bold;
-        }
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
 
-        button:hover {
-            background: #ff9800;
-        }
+.container {
+    display: flex;
+    gap: 40px;
+    padding: 40px 20px;
+    max-width: 1300px;
+    margin: 40px auto;
+}
 
-        .descricao-box {
-            max-width: 1200px;
-            margin: 30px auto;
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-        .btn {
-            padding: 12px 18px;
-            background: #20bf6b;
-            color: white;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: 0.2s;
-        }
+.galeria {
+    flex: 1;
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+}
 
-        .btn:hover {
-            background: #17a65c;
-        }
+.foto-principal-container {
+    width: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    margin-bottom: 20px;
+}
+
+.foto-principal {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.foto-principal:hover {
+    transform: scale(1.02);
+}
+
+.miniaturas {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.miniaturas img {
+    width: 100px;
+    height: 100px;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 3px solid transparent;
+    object-fit: cover;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+}
+
+.miniaturas img:hover {
+    border-color: #667eea;
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.miniaturas img.active {
+    border-color: #667eea;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.info-produto {
+    flex: 1;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+}
+
+.titulo {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+    color: #333;
+    line-height: 1.3;
+}
+
+.avaliacao {
+    color: #fbc02d;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.avaliacao i {
+    font-size: 1.2rem;
+}
+
+.preco {
+    display: block;
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, #20bf6b 0%, #17a65c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.frete {
+    color: #20bf6b;
+    font-size: 1rem;
+    margin-bottom: 30px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.frete i {
+    font-size: 1.1rem;
+}
+
+button {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, #ffb000 0%, #ff9800 100%);
+    border: none;
+    border-radius: 12px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 176, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 176, 0, 0.5);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.descricao-box {
+    max-width: 1300px;
+    margin: 40px auto;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+}
+
+.descricao-box h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.descricao-box h3 i {
+    color: #667eea;
+}
+
+.descricao-box p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #666;
+    text-align: justify;
+}
+
+@media (max-width: 968px) {
+    .container {
+        flex-direction: column;
+        gap: 30px;
+        padding: 20px;
+    }
+    
+    .galeria, .info-produto {
+        width: 100%;
+    }
+    
+    .titulo {
+        font-size: 1.6rem;
+    }
+    
+    .preco {
+        font-size: 2rem;
+    }
+    
+    .descricao-box {
+        padding: 25px 20px;
+        margin: 20px;
+    }
+}
     </style>
 </head>
-
 <body>
 
-<header>
-    PetMarket
-<a href="index.html" class="btn">Voltar</a>
+<!-- Navbar -->
+<header class="navbar">
+    <div class="logo">
+        <i class="fas fa-paw"></i> PetMarket
+    </div>
+    <nav>
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="produtos.html"><i class="fas fa-box"></i> Produtos</a>
+        <a href="servico.html"><i class="fas fa-concierge-bell"></i> Serviços</a>
+        <a href="carrinho.html" id="cart" class="carrinho">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cartCount" class="numero-carrinho">0</span>
+        </a>
+        <button id="logoutBtn" class="btn-login">
+            <i class="fas fa-sign-out-alt"></i> Sair
+        </button>
+        <a href="login_cliente.html" class="btn-login" id="btnLogin">
+            <i class="fas fa-sign-in-alt"></i> Entrar
+        </a>
+    </nav>
 </header>
+
 <div class="container">
     <div class="galeria">
-        <img id="foto-principal" class="foto-principal" src="" alt="Produto">
+        <div class="foto-principal-container">
+            <img id="foto-principal" class="foto-principal" src="" alt="Produto">
+        </div>
         <div id="miniaturas" class="miniaturas"></div>
     </div>
 
     <div class="info-produto">
         <div id="nome" class="titulo"></div>
 
-        <div class="avaliacao">★★★★★ 4.9 (132)</div>
+        <div class="avaliacao">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <span style="color: #666; margin-left: 8px;">4.9 (132 avaliações)</span>
+        </div>
 
         <span id="preco" class="preco"></span>
-        <div class="frete">Frete grátis</div>
+        <div class="frete">
+            <i class="fas fa-truck"></i> Frete grátis
+        </div>
 
-        <button id="btn-carrinho">Adicionar ao Carrinho</button>
+        <button id="btn-carrinho">
+            <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+        </button>
     </div>
 </div>
 
 <div class="descricao-box">
-    <h3>Descrição do Produto</h3>
+    <h3><i class="fas fa-align-left"></i> Descrição do Produto</h3>
     <p id="descricao"></p>
 </div>
 
 <script>
-    let produtoCarregado = null;
+// =========================
+// 🔹 CONTROLE DE LOGIN / LOGOUT
+// =========================
+const nomeCliente = localStorage.getItem("cliente_nome");
+const btnLogin = document.getElementById("btnLogin");
+const logoutBtn = document.getElementById("logoutBtn");
 
-    async function carregarProduto() {
-        const params = new URLSearchParams(location.search);
-        const id = params.get("id");
+if (nomeCliente) {
+    btnLogin.style.display = "none";
+    if (logoutBtn) logoutBtn.style.display = "inline-flex";
+} else {
+    if (logoutBtn) logoutBtn.style.display = "none"; 
+    btnLogin.style.display = "inline-flex";
+}
 
-        if (!id) return alert("ID do produto não encontrado na URL.");
+if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+        localStorage.clear();
+        window.location.reload();
+    });
+}
 
-        try {
-            const res = await fetch("http://localhost:3000/produto/" + id);
-            const p = await res.json();
-
-            produtoCarregado = p;
-
-            document.getElementById("nome").innerText = p.nome;
-            document.getElementById("preco").innerText = "R$ " + p.preco;
-            document.getElementById("descricao").innerText = p.descricao;
-
-            document.getElementById("foto-principal").src =
-                p.imagem_url || "https://placehold.co/600x400?text=Sem+Imagem";
-
-            const mini = document.getElementById("miniaturas");
-            mini.innerHTML = "";
-
-            const listaImagens = [p.imagem_url].filter(Boolean);
-
-            listaImagens.forEach(img => {
-                const m = document.createElement("img");
-                m.src = img;
-                m.onclick = () => {
-                    document.getElementById("foto-principal").src = img;
-                };
-                mini.appendChild(m);
-            });
-
-        } catch (err) {
-            console.error(err);
-            alert("Erro ao carregar o produto.");
-        }
+// =========================
+// 🔹 CARRINHO
+// =========================
+async function atualizarCarrinho() {
+    const token = localStorage.getItem("token_cliente");
+    if (!token) {
+        const cartCount = document.getElementById("cartCount");
+        if (cartCount) cartCount.textContent = 0;
+        return;
     }
 
-    async function adicionarAoCarrinho() {
-        if (!produtoCarregado) return alert("Produto não encontrado!");
-
-        const token = localStorage.getItem("token_cliente"); // 💥 CORRIGIDO
-
-        if (!token) {
-            alert("Você precisa estar logado para adicionar ao carrinho.");
-            return location.href = "login_cliente.html";
-        }
-
-        try {
-            const res = await fetch("http://localhost:3000/carrinho/adicionar", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + token
-                },
-                body: JSON.stringify({
-                    id_produto: produtoCarregado.id_produto,
-                    quantidade: 1
-                })
-            });
-
-            const data = await res.json();
-            
-            console.log("RESPOSTA DO BACK:", data); // 👈 ADICIONE ISSO
-
-            if (!res.ok) {
-                return alert("Erro: " + (data.error || "Falha ao adicionar item"));
+    try {
+        const res = await fetch("http://localhost:3000/carrinho", {
+            headers: {
+                "Authorization": "Bearer " + token
             }
+        });
+        const data = await res.json();
 
-            alert("Produto adicionado ao carrinho!");
-
-        } catch (err) {
-            console.error(err);
-            alert("Erro ao adicionar ao carrinho.");
+        const cartCount = document.getElementById("cartCount");
+        if (cartCount) {
+            if (res.ok) {
+                cartCount.textContent = data.quantidade_itens || 0;
+            } else {
+                cartCount.textContent = 0;
+            }
         }
+    } catch (err) {
+        console.error("Erro ao atualizar carrinho:", err);
+        const cartCount = document.getElementById("cartCount");
+        if (cartCount) cartCount.textContent = 0;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    atualizarCarrinho();
+});
+
+let produtoCarregado = null;
+
+async function carregarProduto() {
+    const params = new URLSearchParams(location.search);
+    const id = params.get("id");
+
+    if (!id) {
+        alert("ID do produto não encontrado na URL.");
+        return;
     }
 
-    document.getElementById("btn-carrinho").addEventListener("click", adicionarAoCarrinho);
+    try {
+        const res = await fetch("http://localhost:3000/produto/" + id);
+        
+        if (!res.ok) {
+            alert("Produto não encontrado.");
+            return;
+        }
+        
+        const p = await res.json();
 
-    carregarProduto();
+        produtoCarregado = p;
+
+        document.getElementById("nome").innerText = p.nome;
+        document.getElementById("preco").innerText = "R$ " + parseFloat(p.preco).toFixed(2).replace('.', ',');
+        document.getElementById("descricao").innerText = p.descricao || "Sem descrição disponível.";
+
+        const imagemPrincipal = p.imagem_url || "https://placehold.co/600x400?text=Sem+Imagem";
+        document.getElementById("foto-principal").src = imagemPrincipal;
+        document.getElementById("foto-principal").onerror = function() {
+            this.src = "https://placehold.co/600x400?text=Sem+Imagem";
+        };
+
+        const mini = document.getElementById("miniaturas");
+        mini.innerHTML = "";
+
+        const listaImagens = [p.imagem_url].filter(Boolean);
+
+        if (listaImagens.length === 0) {
+            listaImagens.push("https://placehold.co/200x200?text=Sem+Imagem");
+        }
+
+        listaImagens.forEach((img, index) => {
+            const m = document.createElement("img");
+            m.src = img;
+            m.onerror = function() {
+                this.src = "https://placehold.co/200x200?text=Sem+Imagem";
+            };
+            if (index === 0) {
+                m.classList.add("active");
+            }
+            m.onclick = () => {
+                document.getElementById("foto-principal").src = img;
+                document.querySelectorAll(".miniaturas img").forEach(img => img.classList.remove("active"));
+                m.classList.add("active");
+            };
+            mini.appendChild(m);
+        });
+
+    } catch (err) {
+        console.error(err);
+        alert("Erro ao carregar o produto.");
+    }
+}
+
+async function adicionarAoCarrinho() {
+    if (!produtoCarregado) {
+        alert("Produto não encontrado!");
+        return;
+    }
+
+    const token = localStorage.getItem("token_cliente");
+
+    if (!token) {
+        alert("Você precisa estar logado para adicionar ao carrinho.");
+        return location.href = "login_cliente.html";
+    }
+
+    const btn = document.getElementById("btn-carrinho");
+    const originalText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adicionando...';
+
+    try {
+        const res = await fetch("http://localhost:3000/carrinho/adicionar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify({
+                id_produto: produtoCarregado.id_produto,
+                quantidade: 1
+            })
+        });
+
+        const data = await res.json();
+        
+        console.log("RESPOSTA DO BACK:", data);
+
+        if (!res.ok) {
+            alert("Erro: " + (data.error || "Falha ao adicionar item"));
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+            return;
+        }
+
+        alert("Produto adicionado ao carrinho!");
+        atualizarCarrinho();
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+
+    } catch (err) {
+        console.error(err);
+        alert("Erro ao adicionar ao carrinho.");
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+    }
+}
+
+document.getElementById("btn-carrinho").addEventListener("click", adicionarAoCarrinho);
+
+carregarProduto();
 </script>
 
 </body>

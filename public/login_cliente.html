@@ -3,140 +3,490 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login do Cliente</title>
+    <title>Login do Cliente - PetShop Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
+            padding: 20px;
         }
 
-        .container {
-            width: 350px;
+        .login-container {
+            width: 100%;
+            max-width: 420px;
             background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.5s ease-out;
         }
 
-        h2 {
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-header {
             text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .login-header .icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .login-header .icon i {
+            font-size: 36px;
+            color: white;
+        }
+
+        .login-header h2 {
             color: #333;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
             margin-bottom: 20px;
+            position: relative;
         }
 
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 8px 0;
-            border-radius: 6px;
-            border: 1px solid #bbb;
+        .form-group label {
+            display: block;
+            color: #555;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
         }
 
-        button {
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 16px;
+        }
+
+        .form-group input {
             width: 100%;
-            padding: 12px;
-            background: #20bf6b;
+            padding: 14px 50px 14px 45px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #bbb;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        .password-toggle:hover {
+            color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .password-toggle:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .password-toggle i {
+            display: block;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 25px;
+        }
+
+        .forgot-password a {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .forgot-password a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 6px;
+            border-radius: 10px;
             font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
         }
 
-        button:hover {
-            background: #17a65c;
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .submit-btn .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
+        }
+
+        .submit-btn.loading .spinner {
+            display: block;
+        }
+
+        .submit-btn.loading .btn-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         .msg {
             text-align: center;
-            margin-top: 10px;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .msg.error {
+            background: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
+        }
+
+        .msg.success {
+            background: #efe;
+            color: #3c3;
+            border: 1px solid #cfc;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+            color: #999;
             font-size: 14px;
         }
 
-        .link {
-            text-align: center;
-            margin-top: 15px;
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
         }
 
-        .link a {
-            color: #20bf6b;
+        .divider span {
+            padding: 0 15px;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .link-item {
+            text-align: center;
+        }
+
+        .link-item a {
+            color: #667eea;
             text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .link-item a:hover {
+            color: #764ba2;
+            transform: translateX(3px);
+        }
+
+        .link-item a i {
+            font-size: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+            }
+
+            .login-header h2 {
+                font-size: 24px;
+            }
         }
     </style>
 </head>
 <body>
-    
-
-    <div class="container">
-        <h2>Login do Cliente</h2>
+    <div class="login-container">
+        <div class="login-header">
+            <div class="icon">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <h2>Login do Cliente</h2>
+            <p>Entre com suas credenciais para continuar</p>
+        </div>
         
         <form id="loginForm">
-            <input type="email" id="email" placeholder="E-mail" required>
-            <input type="password" id="senha" placeholder="Senha" required>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-envelope"></i>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        placeholder="seu@email.com" 
+                        required
+                        autocomplete="email"
+                    >
+                </div>
+            </div>
 
-            <button type="submit">Entrar</button>
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock"></i>
+                    <input 
+                        type="password" 
+                        id="senha" 
+                        placeholder="Digite sua senha" 
+                        required
+                        autocomplete="current-password"
+                    >
+                    <button type="button" class="password-toggle" id="togglePassword">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="forgot-password">
+                <a href="#" onclick="alert('Funcionalidade em desenvolvimento'); return false;">
+                    Esqueceu sua senha?
+                </a>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <span class="btn-text">Entrar</span>
+                <div class="spinner"></div>
+            </button>
         </form>
 
         <div class="msg" id="msg"></div>
 
-        <div class="link">
-            <a href="cadastro_cliente.html">Criar uma conta</a>
-            
+        <div class="divider">
+            <span>ou</span>
         </div>
-        <div class="link">
-            <a href="login_petshop.html">login Petshops</a>
-        </div>
-        <div class="link">
-            <a href="index.html">Voltar para o inicio</a>
+
+        <div class="links">
+            <div class="link-item">
+                <a href="cadastro_cliente.html">
+                    <i class="fas fa-user-plus"></i>
+                    Criar uma conta
+                </a>
+            </div>
+            <div class="link-item">
+                <a href="login_petshop.html">
+                    <i class="fas fa-store"></i>
+                    Login para Petshops
+                </a>
+            </div>
+            <div class="link-item">
+                <a href="index.html">
+                    <i class="fas fa-home"></i>
+                    Voltar para o início
+                </a>
+            </div>
         </div>
     </div>
 
     <script>
-        document.getElementById("loginForm").addEventListener("submit", async function(e) {
+        // Toggle password visibility
+        const togglePassword = document.getElementById('togglePassword');
+        const senhaInput = document.getElementById('senha');
+
+        togglePassword.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const type = senhaInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            senhaInput.setAttribute('type', type);
+            
+            const icon = this.querySelector('i');
+            if (type === 'text') {
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+
+        // Form submission
+        const loginForm = document.getElementById('loginForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const msgDiv = document.getElementById('msg');
+
+        loginForm.addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            const email = document.getElementById("email").value;
-            const senha = document.getElementById("senha").value;
+            const email = document.getElementById('email').value.trim();
+            const senha = document.getElementById('senha').value;
 
-            const resposta = await fetch("http://localhost:3000/cliente/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ email, senha })
-            });
+            // Reset message
+            msgDiv.className = 'msg';
+            msgDiv.innerText = '';
 
-            const dados = await resposta.json();
+            // Disable button and show loading
+            submitBtn.disabled = true;
+            submitBtn.classList.add('loading');
 
-            const msg = document.getElementById("msg");
+            try {
+                const resposta = await fetch("http://localhost:3000/cliente/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ email, senha })
+                });
 
-            if (!resposta.ok) {
-                msg.style.color = "red";
-                msg.innerText = dados.error || "Erro no login";
-                return;
+                const dados = await resposta.json();
+
+                if (!resposta.ok) {
+                    msgDiv.className = 'msg error';
+                    msgDiv.innerText = dados.error || "Erro no login. Verifique suas credenciais.";
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('loading');
+                    return;
+                }
+
+                // Salvar token no localStorage
+                localStorage.setItem("token_cliente", dados.token);
+                localStorage.setItem("cliente_nome", dados.cliente.nome);
+                localStorage.setItem("cliente_id", dados.cliente.id_cliente);
+
+                msgDiv.className = 'msg success';
+                msgDiv.innerText = "Login realizado com sucesso! Redirecionando...";
+                
+                // Redirecionar após 1.5 segundos
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 1500);
+
+            } catch (error) {
+                console.error('Erro:', error);
+                msgDiv.className = 'msg error';
+                msgDiv.innerText = "Erro de conexão. Tente novamente.";
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('loading');
             }
-
-            // Salvar token no localStorage
-            localStorage.setItem("token_cliente", dados.token);
-            localStorage.setItem("cliente_nome", dados.cliente.nome);
-            localStorage.setItem("cliente_id", dados.cliente.id_cliente);
-
-            msg.style.color = "green";
-            msg.innerText = "Login feito com sucesso! Redirecionando...";
-            
-            // Redirecionar após 1.5 segundos
-            setTimeout(() => {
-                window.location.href = "index.html";
-            }, 1500);
         });
-            
+
+        // Auto-focus no primeiro campo
+        document.getElementById('email').focus();
     </script>
-    
 </body>
 </html>

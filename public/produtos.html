@@ -2,93 +2,158 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Produtos - Petshop</title>
-    <link rel="stylesheet" href="css/produtos.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos Disponíveis - PetMarket</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 <style>
 /* Reset básico */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Poppins, Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    background: #f4f6f9;
-    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 0;
 }
 
-/* Cabeçalho */
-header {
+/* Header Section */
+.produtos-header {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px 40px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.produtos-header-content {
+    max-width: 1300px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
-header h1 {
-    font-size: 28px;
-    color: #333;
+.produtos-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.btn {
-    padding: 12px 18px;
-    background: #20bf6b;
+.produtos-header h1 i {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.btn-voltar {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    border-radius: 8px;
+    border-radius: 25px;
     text-decoration: none;
-    font-weight: 500;
-    transition: 0.2s;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
 }
 
-.btn:hover {
-    background: #17a65c;
+.btn-voltar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
 }
 
 /* Container dos cards */
 .produtos-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 40px 20px;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 30px;
 }
 
 /* Card */
 .card {
     background: white;
-    padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-    transition: transform .2s ease, box-shadow .2s ease;
+    padding: 0;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    overflow: hidden;
+    border: 2px solid transparent;
 }
 
 .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+    border-color: rgba(102, 126, 234, 0.3);
 }
 
 .card img {
     width: 100%;
-    height: 160px;
+    height: 220px;
     object-fit: cover;
-    border-radius: 10px;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+    transition: transform 0.4s ease;
+}
+
+.card:hover img {
+    transform: scale(1.1);
+}
+
+.card-content {
+    padding: 20px;
 }
 
 .card h3 {
-    margin: 10px 0 5px;
-    font-size: 18px;
+    margin: 0 0 10px 0;
+    font-size: 1.2rem;
     color: #333;
+    font-weight: 600;
+    line-height: 1.3;
+    height: 50px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .card .descricao {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 12px;
+    line-height: 1.4;
+    height: 40px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 .card .preco {
-    font-size: 18px;
-    font-weight: bold;
-    color: #20bf6b;
+    font-size: 1.6rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #20bf6b 0%, #17a65c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
 }
 
 /* Mensagens */
@@ -97,57 +162,283 @@ header h1 {
 .erro {
     grid-column: 1 / -1;
     text-align: center;
-    font-size: 18px;
-    margin-top: 40px;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+}
+
+.carregando {
+    color: #667eea;
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.carregando i {
+    font-size: 3rem;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.nenhum {
     color: #666;
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.nenhum i {
+    font-size: 4rem;
+    color: #ccc;
 }
 
 .erro {
-    color: red;
+    color: #e74c3c;
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.erro i {
+    font-size: 3rem;
+}
+
+@media (max-width: 768px) {
+    .produtos-header {
+        padding: 20px;
+    }
+    
+    .produtos-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .produtos-container {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        padding: 20px;
+    }
+    
+    .card img {
+        height: 180px;
+    }
 }
 </style>
 </head>
 <body>
 
-
-<header>
-    <h1>Produtos Disponiveis</h1>
-    <a href="index.html" class="btn">Voltar</a>
+<!-- Navbar -->
+<header class="navbar">
+    <div class="logo">
+        <i class="fas fa-paw"></i> PetMarket
+    </div>
+    <nav>
+        <a href="index.html"><i class="fas fa-home"></i> Home</a>
+        <a href="produtos.html"><i class="fas fa-box"></i> Produtos</a>
+        <a href="servico.html"><i class="fas fa-concierge-bell"></i> Serviços</a>
+        <a href="carrinho.html" id="cart" class="carrinho">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cartCount" class="numero-carrinho">0</span>
+        </a>
+        <button id="logoutBtn" class="btn-login">
+            <i class="fas fa-sign-out-alt"></i> Sair
+        </button>
+        <a href="login_cliente.html" class="btn-login" id="btnLogin">
+            <i class="fas fa-sign-in-alt"></i> Entrar
+        </a>
+    </nav>
 </header>
 
-<section id="produtos" class="produtos-container">
-    <p class="carregando">Carregando produtos...</p>
+<!-- Header Section -->
+<section class="produtos-header">
+    <div class="produtos-header-content">
+        <h1><i class="fas fa-box-open"></i> Produtos Disponíveis</h1>
+        <a href="index.html" class="btn-voltar">
+            <i class="fas fa-arrow-left"></i> Voltar
+        </a>
+    </div>
 </section>
 
+<section id="produtos" class="produtos-container">
+    <div class="carregando">
+        <i class="fas fa-spinner"></i>
+        <span>Carregando produtos...</span>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-logo">
+            <div class="logo">🐾 PetMarket</div>
+        </div>
+        <div class="footer-info">
+            <p>© Copyright 2025 – PetMarket – Todos os direitos reservados PetMarket Serviços Digitais S.A.</p>
+            <p>CNPJ 12.345.678/0001-90 / Rua Ceara, nº 1200, Bairro Centro, Imperatriz/MA – CEP 01.234-567</p>
+        </div>
+        <div class="footer-links">
+            <a href="#">Termos e condições de uso</a>
+            <a href="#">Código de conduta</a>
+            <a href="#">Privacidade</a>
+            <a href="#">Dicas de segurança</a>
+        </div>
+    </div>
+</footer>
+
 <script>
-async function carregarProdutos() {
+// =========================
+// 🔹 CONTROLE DE LOGIN / LOGOUT
+// =========================
+const nomeCliente = localStorage.getItem("cliente_nome");
+const areaUsuario = document.getElementById("areaUsuario");
+const nomeUsuario = document.getElementById("nomeUsuario");
+const btnLogin = document.getElementById("btnLogin");
+const logoutBtn = document.getElementById("logoutBtn");
+
+if (nomeCliente) {
+    btnLogin.style.display = "none";
+    if (logoutBtn) logoutBtn.style.display = "inline-block";
+} else {
+    if (logoutBtn) logoutBtn.style.display = "none"; 
+    btnLogin.style.display = "inline-block";
+}
+
+if (logoutBtn) {
+    logoutBtn.addEventListener("click", () => {
+        localStorage.clear();
+        window.location.reload();
+    });
+}
+
+// =========================
+// 🔹 CARRINHO
+// =========================
+async function atualizarCarrinho() {
+    const token = localStorage.getItem("token_cliente");
+    if (!token) {
+        const cartCount = document.getElementById("cartCount");
+        if (cartCount) cartCount.textContent = 0;
+        return;
+    }
+
     try {
-        const resposta = await fetch("http://localhost:3000/produto");
+        const res = await fetch("http://localhost:3000/carrinho", {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+        const data = await res.json();
+
+        const cartCount = document.getElementById("cartCount");
+        if (cartCount) {
+            if (res.ok) {
+                cartCount.textContent = data.quantidade_itens;
+            } else {
+                cartCount.textContent = 0;
+            }
+        }
+    } catch (err) {
+        console.error("Erro ao atualizar carrinho:", err);
+        const cartCount = document.getElementById("cartCount");
+        if (cartCount) cartCount.textContent = 0;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    atualizarCarrinho();
+});
+
+// =========================
+// 🔹 PRODUTOS
+// =========================
+async function carregarProdutos() {
+    const container = document.getElementById("produtos");
+    
+    // Obter categoria da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoria = urlParams.get('categoria');
+    
+    // Mapear nomes de categoria para exibição
+    const nomesCategoria = {
+        'higiene': 'Cosméticos',
+        'ração': 'Rações',
+        'acessório': 'Acessórios'
+    };
+    
+    // Atualizar título se houver categoria
+    if (categoria && nomesCategoria[categoria]) {
+        const headerTitle = document.querySelector('.produtos-header h1');
+        if (headerTitle) {
+            headerTitle.innerHTML = `<i class="fas fa-box-open"></i> ${nomesCategoria[categoria]}`;
+        }
+    }
+    
+    try {
+        container.innerHTML = `
+            <div class="carregando">
+                <i class="fas fa-spinner"></i>
+                <span>Carregando produtos...</span>
+            </div>
+        `;
+
+        // Construir URL com filtro de categoria se existir
+        let url = "http://localhost:3000/produto";
+        if (categoria) {
+            url += `?categoria=${encodeURIComponent(categoria)}`;
+        }
+
+        const resposta = await fetch(url);
         const dados = await resposta.json();
 
-        const container = document.getElementById("produtos");
         container.innerHTML = "";
-        console.log(dados);
 
         if (dados.length === 0) {
-            container.innerHTML = "<p class='nenhum'>Nenhum produto cadastrado.</p>";
+            const mensagem = categoria && nomesCategoria[categoria] 
+                ? `Nenhum produto encontrado na categoria ${nomesCategoria[categoria]}.`
+                : 'Nenhum produto cadastrado.';
+            container.innerHTML = `
+                <div class="nenhum">
+                    <i class="fas fa-box-open"></i>
+                    <p>${mensagem}</p>
+                </div>
+            `;
             return;
         }
 
         dados.forEach(produto => {
-            container.innerHTML += `
-                <div class="card" onclick="window.location.href='ver_produto.html?id=${produto.id_produto}'">
-                    <img src="${produto.imagem_url ? produto.imagem_url : 'img/sem-imagem.png'}" alt="Imagem do Produto">
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.onclick = () => window.location.href = `ver_produto.html?id=${produto.id_produto}`;
+            
+            card.innerHTML = `
+                <img src="${produto.imagem_url || 'https://placehold.co/600x400?text=Sem+Imagem'}" 
+                     alt="${produto.nome}"
+                     onerror="this.src='https://placehold.co/600x400?text=Sem+Imagem'">
+                <div class="card-content">
                     <h3>${produto.nome}</h3>
-                    <p class="descricao">${produto.descricao}</p>
-                    <span class="preco">R$ ${produto.preco}</span>
+                    <p class="descricao">${produto.descricao || 'Sem descrição disponível'}</p>
+                    <span class="preco">R$ ${parseFloat(produto.preco).toFixed(2).replace('.', ',')}</span>
                 </div>
             `;
+            
+            container.appendChild(card);
         });
     } catch (erro) {
         console.error("Erro ao buscar produtos:", erro);
-        document.getElementById("produtos").innerHTML =
-            "<p class='erro'>Erro ao carregar os produtos.</p>";
+        container.innerHTML = `
+            <div class="erro">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p>Erro ao carregar os produtos. Tente novamente mais tarde.</p>
+            </div>
+        `;
     }
 }
 

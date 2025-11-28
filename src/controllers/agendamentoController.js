@@ -88,7 +88,7 @@ export async function listarAgendamentosCliente(req, res) {
         const { id_cliente } = req.user;
 
         const q = `
-            SELECT a.id_agendamento, a.data_hora, a.status,
+            SELECT a.id_agendamento, a.data_hora, a.status, a.id_servico,
                    s.nome AS servico_nome
             FROM agendamento a
             JOIN servico s ON a.id_servico = s.id_servico

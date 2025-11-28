@@ -3,103 +3,323 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agendamentos - Petshop</title>
+<title>Agendamentos - PetMarket</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
 <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 body { 
-    font-family: Arial, sans-serif; 
-    margin:0; 
-    padding:0; 
-    background:#f3f4f6; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    margin: 0; 
+    padding: 0; 
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
 }
-header {
-            background: #2874f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            color: #fff;
-            padding: 15px 30px;
-            font-size: 22px;
-            font-weight: bold;  
-        }
 
-        header h1 {
-            font-size: 28px;
-            color: #ffffff;
-        }
+/* Navbar */
+.navbar {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
 
-.btn {
-    padding: 12px 18px;
-    background: #20bf6b;
+.navbar .logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navbar .logo i {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 1.6rem;
+}
+
+.btn-voltar {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    border-radius: 8px;
+    border-radius: 25px;
     text-decoration: none;
-    font-weight: 500;
-    transition: 0.2s;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
+
+.btn-voltar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+/* Header Section */
+.agendamentos-header {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px 40px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.agendamentos-header-content {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.agendamentos-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+}
+
+.agendamentos-header h1 i {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
 .container { 
-    max-width:900px; 
-    margin:30px auto; 
-    background:white; 
-    padding:25px; 
-    border-radius:12px; 
-    box-shadow:0 3px 8px rgba(0,0,0,0.15); 
+    max-width: 1200px; 
+    margin: 0 auto 60px; 
+    padding: 40px 20px; 
 }
+
+.table-wrapper {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    overflow: hidden;
+    overflow-x: auto;
+}
+
 table { 
-    width:100%; 
+    width: 100%; 
     border-collapse: collapse; 
-    margin-top:20px; 
 }
 
-th, td { padding:12px; 
-    border-bottom:1px solid #ddd; 
-    text-align:left; 
+th, td { 
+    padding: 16px 20px; 
+    text-align: left; 
+    border-bottom: 1px solid #f0f0f0;
 }
 
-th { background:#2563eb; 
-    color:white; 
+th { 
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white; 
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+th i {
+    margin-right: 8px;
+}
+
+tbody tr {
+    transition: all 0.3s ease;
+}
+
+tbody tr:hover {
+    background: #f8f9fa;
+    transform: scale(1.01);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+td {
+    color: #333;
+    font-size: 0.95rem;
+    word-wrap: break-word;
+    word-break: break-word;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: capitalize;
 }
 
 .status-pendente { 
-    color:#f59e0b; 
-    font-weight:bold; 
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
 }
 
 .status-confirmado { 
-    color:#16a34a; 
-    font-weight:bold; 
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(22, 163, 74, 0.3);
 }
 
 .status-cancelado { 
-    color:#ef4444; 
-    font-weight:bold; 
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+.empty-state p {
+    font-size: 1.2rem;
+    color: #999;
+}
+
+.loading-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #667eea;
+}
+
+.loading-state i {
+    font-size: 3rem;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.error-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #ef4444;
+}
+
+.error-state i {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .agendamentos-header {
+        padding: 20px;
+    }
+    
+    .agendamentos-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .container {
+        padding: 20px;
+    }
+    
+    .table-wrapper {
+        overflow-x: auto;
+    }
+    
+    table {
+        min-width: 600px;
+    }
+    
+    th, td {
+        padding: 12px 15px;
+        font-size: 0.85rem;
+    }
 }
 </style>
 </head>
 <body>
 
-<header>
-    <h1>Agendamentos do Petshop</h1>
-    <a href="dashboard_petshop.html" class="btn">Voltar</a>
+<!-- Navbar -->
+<header class="navbar">
+    <div class="logo">
+        <i class="fas fa-paw"></i> Painel Petshop
+    </div>
+    <a href="dashboard_petshop.html" class="btn-voltar">
+        <i class="fas fa-arrow-left"></i> Voltar
+    </a>
 </header>
 
+<!-- Header Section -->
+<section class="agendamentos-header">
+    <div class="agendamentos-header-content">
+        <h1><i class="fas fa-calendar-check"></i> Agendamentos do Petshop</h1>
+    </div>
+</section>
+
 <div class="container">
-    <table>
-        <thead>
-            <tr>
-                <th>Cliente</th>
-                <th>Serviço</th>
-                <th>Data/Hora</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody id="agendamentosBody"></tbody>
-    </table>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th><i class="fas fa-user"></i> Cliente</th>
+                    <th><i class="fas fa-concierge-bell"></i> Serviço</th>
+                    <th><i class="fas fa-calendar-alt"></i> Data/Hora</th>
+                    <th><i class="fas fa-info-circle"></i> Status</th>
+                </tr>
+            </thead>
+            <tbody id="agendamentosBody">
+                <tr>
+                    <td colspan="4" class="loading-state">
+                        <i class="fas fa-spinner"></i>
+                        <p>Carregando agendamentos...</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script>
 async function carregarAgendamentos() {
     const token = localStorage.getItem("token_petshop");
+    const tbody = document.getElementById("agendamentosBody");
+    
     if (!token) {
         alert("Você precisa estar logado!");
         window.location.href = "login_petshop.html";
@@ -107,21 +327,43 @@ async function carregarAgendamentos() {
     }
 
     try {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="4" class="loading-state">
+                    <i class="fas fa-spinner"></i>
+                    <p>Carregando agendamentos...</p>
+                </td>
+            </tr>
+        `;
+
         const res = await fetch("http://localhost:3000/agendamento/petshop", {
             headers: { "Authorization": "Bearer " + token }
         });
 
         if (!res.ok) {
-            alert("Erro ao carregar agendamentos");
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="4" class="error-state">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Erro ao carregar agendamentos</p>
+                    </td>
+                </tr>
+            `;
             return;
         }
 
         const agendamentos = await res.json();
-        const tbody = document.getElementById("agendamentosBody");
         tbody.innerHTML = "";
 
         if (agendamentos.length === 0) {
-            tbody.innerHTML = "<tr><td colspan='4'>Nenhum agendamento encontrado.</td></tr>";
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="4" class="empty-state">
+                        <i class="fas fa-calendar-times"></i>
+                        <p>Nenhum agendamento encontrado.</p>
+                    </td>
+                </tr>
+            `;
             return;
         }
 
@@ -132,11 +374,22 @@ async function carregarAgendamentos() {
                                 a.status === "confirmado" ? "status-confirmado" : 
                                 "status-cancelado";
 
+            const dataHora = new Date(a.data_hora);
+            const dataFormatada = dataHora.toLocaleDateString('pt-BR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+            const horaFormatada = dataHora.toLocaleTimeString('pt-BR', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
             tr.innerHTML = `
-                <td>${a.cliente_nome}</td>
-                <td>${a.servico_nome}</td>
-                <td>${new Date(a.data_hora).toLocaleString()}</td>
-                <td class="${statusClass}">${a.status}</td>
+                <td><strong>${a.cliente_nome || 'N/A'}</strong></td>
+                <td>${a.servico_nome || 'N/A'}</td>
+                <td>${dataFormatada} às ${horaFormatada}</td>
+                <td><span class="status-badge ${statusClass}">${a.status}</span></td>
             `;
 
             tbody.appendChild(tr);
@@ -144,7 +397,14 @@ async function carregarAgendamentos() {
 
     } catch (e) {
         console.error("Erro:", e);
-        alert("Erro ao buscar agendamentos");
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="4" class="error-state">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Erro ao buscar agendamentos. Tente novamente.</p>
+                </td>
+            </tr>
+        `;
     }
 }
 
@@ -153,4 +413,3 @@ carregarAgendamentos();
 
 </body>
 </html>
-

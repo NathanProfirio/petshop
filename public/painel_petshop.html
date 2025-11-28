@@ -3,207 +3,533 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel - Gerenciar Produtos</title>
-
+    <title>Gerenciar Produtos - PetMarket</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #f0f2f5;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    margin: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+.navbar .logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navbar .logo i {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 1.6rem;
+}
+
+.btn-voltar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.btn-voltar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+/* Header Section */
+.produtos-header {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px 40px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.produtos-header-content {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.produtos-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+}
+
+.produtos-header h1 i {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.container {
+    max-width: 1600px;
+    margin: 0 auto 60px;
+    padding: 40px 20px;
+}
+
+.btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: linear-gradient(135deg, #20bf6b 0%, #17a65c 100%);
+    color: white;
+    border-radius: 25px;
+    text-decoration: none;
+    margin-bottom: 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(32, 191, 107, 0.4);
+}
+
+.btn-add:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(32, 191, 107, 0.5);
+}
+
+.produtos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+}
+
+.card {
+    background: white;
+    padding: 0;
+    border-radius: 20px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+    text-align: center;
+    overflow: visible;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 2px solid transparent;
+}
+
+.card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
+.card-img-container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+}
+
+.card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+    display: block;
+}
+
+.card:hover img {
+    transform: scale(1.05);
+}
+
+.card-content {
+    padding: 20px;
+    overflow: visible;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.card h3 {
+    margin: 10px 0;
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.card p {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 10px 0;
+    line-height: 1.5;
+    height: 40px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.card strong {
+    display: block;
+    margin-top: 12px;
+    font-size: 1.6rem;
+    background: linear-gradient(135deg, #20bf6b 0%, #17a65c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+}
+
+.status-badge {
+    margin-top: 10px;
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: white;
+}
+
+.status-badge.ativo {
+    background: linear-gradient(135deg, #20bf6b 0%, #17a65c 100%);
+    box-shadow: 0 2px 8px rgba(32, 191, 107, 0.3);
+}
+
+.status-badge.inativo {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+.actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    overflow: visible;
+}
+
+.btn-edit {
+    flex: 1;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 10px 6px;
+    border-radius: 12px;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-width: 0;
+    box-sizing: border-box;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: visible;
+}
+
+.btn-edit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-delete {
+    flex: 1;
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    border: none;
+    padding: 10px 6px;
+    color: white;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-width: 0;
+    box-sizing: border-box;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: visible;
+}
+
+.btn-delete:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+}
+
+/* -------- MODAL -------- */
+#modal-editar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#modal-box {
+    background: white;
+    padding: 35px;
+    width: 90%;
+    max-width: 450px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
     }
-
-    header {
-        background: #2563eb;
-        color: white;
-        padding: 15px 25px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
+}
 
-    h1 { margin: 0; }
+#modal-box h2 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
 
-    .btn-sair {
-        background: #ef4444;
-        border: none;
-        padding: 10px 18px;
-        border-radius: 8px;
-        cursor: pointer;
-        color: white;
-        font-size: 15px;
+#modal-box label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+#modal-box input,
+#modal-box textarea,
+#modal-box select {
+    width: 100%;
+    padding: 12px 15px;
+    margin-top: 5px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+    font-family: inherit;
+}
+
+#modal-box input:focus,
+#modal-box textarea:focus,
+#modal-box select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+#modal-box textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Select estilizado */
+#modal-box select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23667eea' height='22' width='22' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    cursor: pointer;
+    padding-right: 40px;
+}
+
+#modal-box select:hover {
+    border-color: #667eea;
+}
+
+#modal-box button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    margin-top: 15px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.btn-cancel {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+.btn-cancel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+}
+
+@media (max-width: 768px) {
+    .produtos-header {
+        padding: 20px;
     }
-    .btn-sair:hover { background: #dc2626; }
-
-    .container {
-        width: 90%;
-        margin: 20px auto;
+    
+    .produtos-header h1 {
+        font-size: 1.8rem;
     }
-
-    .btn-add {
-        display: inline-block;
-        padding: 12px 18px;
-        background: #10b981;
-        color: white;
-        border-radius: 8px;
-        text-decoration: none;
-        margin-bottom: 20px;
-        font-weight: bold;
-    }
-    .btn-add:hover { background: #059669; }
-
+    
     .produtos-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        grid-template-columns: 1fr;
         gap: 20px;
     }
-
-    .card {
-        background: white;
-        padding: 15px;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        text-align: center;
+    
+    .container {
+        padding: 20px;
     }
-
-    .card img {
-        width: 100%;
-        height: 160px;
-        object-fit: cover;
-        border-radius: 10px;
-    }
-
-    .card h3 { margin: 10px 0; color: #333; }
-    .card p { font-size: 14px; color: #555; }
-    .card strong { display: block; margin-top: 10px; font-size: 18px; color: #2563eb; }
-
-    .actions {
-        margin-top: 15px;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .btn-edit {
-        background: #3b82f6;
-        color: white;
-        padding: 8px 12px;
-        border-radius: 6px;
-        text-decoration: none;
-        cursor: pointer;
-    }
-    .btn-edit:hover { background: #1d4ed8; }
-
-    .btn-delete {
-        background: #ef4444;
-        border: none;
-        padding: 8px 12px;
-        color: white;
-        border-radius: 6px;
-        cursor: pointer;
-    }
-    .btn-delete:hover { background: #b91c1c; }
-
-    /* -------- MODAL -------- */
-    #modal-editar {
-        display:none;
-        position: fixed;
-        top:0; left:0;
-        width:100%; height:100%;
-        background: rgba(0,0,0,0.5);
-        justify-content:center;
-        align-items:center;
-    }
-
+    
     #modal-box {
-        background:white;
-        padding:20px;
-        width:380px;
-        border-radius:12px;
+        width: 95%;
+        padding: 25px;
     }
-
-    #modal-box input,
-    #modal-box textarea,
-    #modal-box select {
-        width:100%;
-        padding:10px;
-        margin-top:5px;
-        border:1px solid #ddd;
-        border-radius:8px;
-        font-size: 15px;
-    }
-
-    /* Select estilizado */
-    #modal-box select {
-        appearance: none;
-        background-image: url("data:image/svg+xml;utf8,<svg fill='gray' height='22' width='22' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
-        background-repeat: no-repeat;
-        background-position: right 12px center;
-        cursor: pointer;
-    }
-
-    #modal-box select:hover {
-        border-color: #2563eb;
-    }
-
-    #modal-box select:focus {
-        border-color: #2563eb;
-        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
-    }
-
-    #modal-box button {
-        width:100%;
-        padding:12px;
-        border:none;
-        border-radius:8px;
-        margin-top:10px;
-        cursor:pointer;
-        font-size:15px;
-    }
-
-    .btn-save { background:#2563eb; color:white; }
-    .btn-cancel { background:#ef4444; color:white; }
+}
 
 </style>
 </head>
 <body>
 
-<header>
-    <h1>Gerenciar Produtos</h1>
-    <a href="dashboard_petshop.html">
-        <button class="btn-sair">Voltar</button>
+<!-- Navbar -->
+<header class="navbar">
+    <div class="logo">
+        <i class="fas fa-paw"></i> Painel Petshop
+    </div>
+    <a href="dashboard_petshop.html" class="btn-voltar">
+        <i class="fas fa-arrow-left"></i> Voltar
     </a>
 </header>
 
+<!-- Header Section -->
+<section class="produtos-header">
+    <div class="produtos-header-content">
+        <h1><i class="fas fa-box"></i> Gerenciar Produtos</h1>
+    </div>
+</section>
+
 <div class="container">
-    <a href="cadastro_produto.html" class="btn-add">+ Adicionar Produto</a>
+    <a href="cadastro_produto.html" class="btn-add">
+        <i class="fas fa-plus"></i> Adicionar Produto
+    </a>
 
     <div id="produtos" class="produtos-grid"></div>
 </div>
 
 <!-- 🔵 MODAL DE EDIÇÃO -->
-<div id="modal-editar">
+<div id="modal-editar" onclick="if(event.target === this) fecharModal()">
     <div id="modal-box">
-        <h2>Editar Produto</h2>
+        <h2><i class="fas fa-edit"></i> Editar Produto</h2>
 
-        <label>Nome</label>
-        <input id="edit-nome">
+        <label><i class="fas fa-tag"></i> Nome</label>
+        <input id="edit-nome" placeholder="Nome do produto">
 
-        <label>Preço</label>
-        <input id="edit-preco" type="number" step="0.01">
+        <label><i class="fas fa-dollar-sign"></i> Preço</label>
+        <input id="edit-preco" type="number" step="0.01" placeholder="0.00">
 
-        <label>Descrição</label>
-        <textarea id="edit-descricao"></textarea>
+        <label><i class="fas fa-align-left"></i> Descrição</label>
+        <textarea id="edit-descricao" placeholder="Descrição do produto"></textarea>
 
-        <label>Status do Produto</label>
+        <label><i class="fas fa-toggle-on"></i> Status do Produto</label>
         <select id="edit-ativo">
             <option value="true">Ativo</option>
             <option value="false">Inativo</option>
         </select>
 
-        <label>Imagem</label>
-        <input id="edit-imagem" type="file">
+        <label><i class="fas fa-image"></i> Imagem</label>
+        <input id="edit-imagem" type="file" accept="image/*">
 
-        <button class="btn-save" onclick="salvarEdicao()">Salvar</button>
-        <button class="btn-cancel" onclick="fecharModal()">Cancelar</button>
+        <button class="btn-save" onclick="salvarEdicao()">
+            <i class="fas fa-save"></i> Salvar
+        </button>
+        <button class="btn-cancel" onclick="fecharModal()">
+            <i class="fas fa-times"></i> Cancelar
+        </button>
     </div>
 </div>
 
@@ -226,27 +552,26 @@ async function carregarProdutos() {
     dados.forEach(p => {
         container.innerHTML += `
             <div class="card">
-                <img src="${p.imagem_url || 'img/sem-imagem.png'}">
-                <h3>${p.nome}</h3>
-                <p>${p.descricao}</p>
-                <strong>R$ ${p.preco}</strong>
-
-                <span style="
-                    margin-top: 5px;
-                    display: inline-block;
-                    padding: 4px 8px;
-                    border-radius: 6px;
-                    font-weight: bold;
-                    font-size: 13px;
-                    color: white;
-                    background: ${p.ativo ? '#28a745' : '#dc3545'};
-                ">
-                    ${p.ativo ? 'Ativo' : 'Inativo'}
-                </span>
-
-                <div class="actions">
-                    <button class="btn-edit" onclick="editar(${p.id_produto})">Editar</button>
-                    <button class="btn-delete" onclick="excluir(${p.id_produto})">Excluir</button>
+                <div class="card-img-container">
+                    <img src="${p.imagem_url || 'https://placehold.co/600x400?text=Sem+Imagem'}" 
+                         alt="${p.nome}"
+                         onerror="this.src='https://placehold.co/600x400?text=Sem+Imagem'">
+                </div>
+                <div class="card-content">
+                    <h3>${p.nome}</h3>
+                    <p>${p.descricao || 'Sem descrição'}</p>
+                    <strong>R$ ${parseFloat(p.preco).toFixed(2).replace('.', ',')}</strong>
+                    <span class="status-badge ${p.ativo ? 'ativo' : 'inativo'}">
+                        <i class="fas fa-${p.ativo ? 'check-circle' : 'times-circle'}"></i> ${p.ativo ? 'Ativo' : 'Inativo'}
+                    </span>
+                    <div class="actions">
+                        <button class="btn-edit" onclick="editar(${p.id_produto})">
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
+                        <button class="btn-delete" onclick="excluir(${p.id_produto})">
+                            <i class="fas fa-trash"></i> Excluir
+                        </button>
+                    </div>
                 </div>
             </div>
         `;
@@ -321,11 +646,6 @@ async function excluir(id) {
     }
 }
 
-// Logout
-document.getElementById("logout").onclick = () => {
-    localStorage.removeItem("token_petshop");
-    window.location.href = "login_petshop.html";
-};
 </script>
 
 </body>

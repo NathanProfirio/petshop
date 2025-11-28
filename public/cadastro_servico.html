@@ -2,108 +2,333 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Cadastrar Serviço</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Serviço - PetMarket</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 
     <style>
-        body {
-            margin: 0;
-            font-family: Poppins, sans-serif;
-            background: #f5f7fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
-        .container {
-            background: white;
-            width: 420px;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
+body {
+    margin: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
 
-        h2 {
-            text-align: center;
-            margin-bottom: 25px;
-        }
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
 
-        label {
-            margin-top: 10px;
-            display: block;
-            font-weight: 500;
-        }
+.navbar .logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
 
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            margin-top: 6px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 15px;
-        }
+.btn-voltar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
 
-        textarea {
-            height: 90px;
-            resize: none;
-        }
+.btn-voltar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
 
-        button {
-            width: 100%;
-            padding: 12px;
-            margin-top: 20px;
-            background: #20bf6b;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            cursor: pointer;
-        }
+.container {
+    background: white;
+    width: 100%;
+    max-width: 500px;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    margin-top: 80px;
+    animation: slideUp 0.5s ease-out;
+}
 
-        button:hover {
-            background: #17a65c;
-        }
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-        .voltar {
-            text-align: center;
-            margin-top: 15px;
-        }
+.form-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
 
-        .voltar a {
-            color: #20bf6b;
-            text-decoration: none;
-        }
+.form-header .icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
 
+.form-header .icon i {
+    font-size: 28px;
+    color: white;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 5px;
+}
+
+.form-header p {
+    color: #666;
+    font-size: 14px;
+}
+
+label {
+    margin-top: 15px;
+    margin-bottom: 6px;
+    display: block;
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+label i {
+    color: #667eea;
+    font-size: 16px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 14px 15px;
+    margin-top: 6px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+    font-family: inherit;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+input::placeholder, textarea::placeholder {
+    color: #bbb;
+}
+
+textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px;
+    background: linear-gradient(135deg, #20bf6b 0%, #17a65c 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(32, 191, 107, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(32, 191, 107, 0.5);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.voltar {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.voltar a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s ease;
+}
+
+.voltar a:hover {
+    color: #764ba2;
+    transform: translateX(-3px);
+}
+
+#msg {
+    text-align: center;
+    margin-top: 20px;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 14px;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#msg.success {
+    background: #f0fdf4;
+    color: #20bf6b;
+    border: 1px solid #86efac;
+}
+
+#msg.error {
+    background: #fef2f2;
+    color: #ef4444;
+    border: 1px solid #fecaca;
+}
+
+#msg.loading {
+    background: #f0f9ff;
+    color: #667eea;
+    border: 1px solid #bfdbfe;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 15px 20px;
+    }
+    
+    .container {
+        padding: 30px 20px;
+        margin-top: 70px;
+    }
+    
+    h2 {
+        font-size: 24px;
+    }
+}
     </style>
 </head>
-
 <body>
 
+<!-- Navbar -->
+<header class="navbar">
+    <div class="logo">
+        <i class="fas fa-paw"></i> Painel Petshop
+    </div>
+    <a href="servico_petshop.html" class="btn-voltar">
+        <i class="fas fa-arrow-left"></i> Voltar
+    </a>
+</header>
+
 <div class="container">
-    <h2>Cadastrar Serviço</h2>
+    <div class="form-header">
+        <div class="icon">
+            <i class="fas fa-concierge-bell"></i>
+        </div>
+        <h2>Cadastrar Serviço</h2>
+        <p>Preencha os dados do novo serviço</p>
+    </div>
 
     <form id="formServico">
+        <label><i class="fas fa-tag"></i> Nome do Serviço</label>
+        <input type="text" name="nome" placeholder="Ex: Banho e Tosa" required>
 
-        <label>Nome do Serviço</label>
-        <input type="text" name="nome" required>
+        <label><i class="fas fa-align-left"></i> Descrição</label>
+        <textarea name="descricao" placeholder="Descreva o serviço oferecido" required></textarea>
 
-        <label>Descrição</label>
-        <textarea name="descricao" required></textarea>
+        <label><i class="fas fa-dollar-sign"></i> Preço (R$)</label>
+        <input type="number" step="0.01" name="preco" placeholder="0.00" min="0" required>
 
-        <label>Preço (R$)</label>
-        <input type="number" step="0.01" name="preco" required>
+        <label><i class="fas fa-clock"></i> Duração (minutos)</label>
+        <input type="number" name="duracao_minutos" placeholder="60" min="1" required>
 
-        <label>Duração (minutos)</label>
-        <input type="number" name="duracao_minutos" required>
-
-        <button type="submit">Cadastrar Serviço</button>
+        <button type="submit" id="btnCadastrar">
+            <i class="fas fa-plus"></i> Cadastrar Serviço
+        </button>
     </form>
 
+    <div id="msg"></div>
+
     <div class="voltar">
-        <a href="painel_petshop.html">← Voltar ao painel</a>
+        <a href="servico_petshop.html">
+            <i class="fas fa-arrow-left"></i> Voltar aos serviços
+        </a>
     </div>
 </div>
-
 
 <script>
 const token = localStorage.getItem("token_petshop");
@@ -117,28 +342,66 @@ document.getElementById("formServico").onsubmit = async (event) => {
     event.preventDefault();
 
     const form = event.target;
+    const btnCadastrar = document.getElementById("btnCadastrar");
+    const msg = document.getElementById("msg");
+    const originalText = btnCadastrar.innerHTML;
+
+    // Validação
+    const nome = form.nome.value.trim();
+    const descricao = form.descricao.value.trim();
+    const preco = form.preco.value;
+    const duracao = form.duracao_minutos.value;
+
+    if (!nome || !descricao || !preco || !duracao) {
+        msg.className = "error";
+        msg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Preencha todos os campos!';
+        return;
+    }
+
+    // Desabilitar botão e mostrar loading
+    btnCadastrar.disabled = true;
+    btnCadastrar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cadastrando...';
+    msg.className = "loading";
+    msg.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cadastrando serviço...';
 
     const dados = {
-        nome: form.nome.value,
-        descricao: form.descricao.value,
-        preco: form.preco.value,
-        duracao_minutos: form.duracao_minutos.value
+        nome: nome,
+        descricao: descricao,
+        preco: parseFloat(preco),
+        duracao_minutos: parseInt(duracao)
     };
 
-    const resposta = await fetch("http://localhost:3000/servico", {
-        method: "POST",
-        headers: {
-            "Authorization": "Bearer " + token,
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(dados)
-    });
+    try {
+        const resposta = await fetch("http://localhost:3000/servico", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(dados)
+        });
 
-    if (resposta.ok) {
-        alert("Serviço cadastrado com sucesso!");
-        window.location.href = "servico_petshop.html"; // volta ao painel
-    } else {
-        alert("Erro ao cadastrar serviço.");
+        const data = await resposta.json();
+
+        if (resposta.ok) {
+            msg.className = "success";
+            msg.innerHTML = '<i class="fas fa-check-circle"></i> Serviço cadastrado com sucesso!';
+            
+            setTimeout(() => {
+                window.location.href = "servico_petshop.html";
+            }, 1500);
+        } else {
+            msg.className = "error";
+            msg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${data.error || "Erro ao cadastrar serviço"}`;
+            btnCadastrar.disabled = false;
+            btnCadastrar.innerHTML = originalText;
+        }
+    } catch (error) {
+        console.error("Erro:", error);
+        msg.className = "error";
+        msg.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Erro de conexão. Tente novamente.';
+        btnCadastrar.disabled = false;
+        btnCadastrar.innerHTML = originalText;
     }
 };
 </script>

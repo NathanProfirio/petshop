@@ -2,115 +2,357 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Cadastrar Produto - Petshop</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadastrar Produto - PetMarket</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
 
 <style>
-    body {
-        margin: 0;
-        font-family: Poppins, sans-serif;
-        background: #f5f6fa;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-    }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
+body {
+    margin: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+.navbar .logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-voltar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.btn-voltar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    margin-top: 80px;
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.form-header .icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+
+.form-header .icon i {
+    font-size: 36px;
+    color: white;
+}
+
+h2 {
+    font-size: 28px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+}
+
+.form-header p {
+    color: #666;
+    font-size: 14px;
+}
+
+label {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+label i {
+    color: #667eea;
+    font-size: 16px;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 14px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+    font-family: inherit;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+input::placeholder, textarea::placeholder {
+    color: #bbb;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23667eea' height='22' width='22' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    cursor: pointer;
+    padding-right: 40px;
+}
+
+input[type="file"] {
+    padding: 12px;
+    cursor: pointer;
+    background: white;
+}
+
+input[type="file"]::file-selector-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-right: 12px;
+    transition: all 0.3s ease;
+}
+
+input[type="file"]::file-selector-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+#preview {
+    margin-top: 15px;
+    width: 100%;
+    max-height: 250px;
+    object-fit: contain;
+    display: none;
+    border-radius: 10px;
+    border: 2px solid #e0e0e0;
+    padding: 10px;
+    background: #f8f9fa;
+}
+
+button {
+    margin-top: 30px;
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #20bf6b 0%, #17a65c 100%);
+    border: none;
+    color: white;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(32, 191, 107, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(32, 191, 107, 0.5);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#msg {
+    text-align: center;
+    margin-top: 20px;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 500;
+    font-size: 14px;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#msg.success {
+    background: #f0fdf4;
+    color: #20bf6b;
+    border: 1px solid #86efac;
+}
+
+#msg.error {
+    background: #fef2f2;
+    color: #ef4444;
+    border: 1px solid #fecaca;
+}
+
+#msg.loading {
+    background: #f0f9ff;
+    color: #667eea;
+    border: 1px solid #bfdbfe;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 15px 20px;
+    }
+    
     .container {
-        width: 450px;
-        background: white;
-        padding: 25px;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        padding: 30px 20px;
+        margin-top: 70px;
     }
-
+    
     h2 {
-        text-align: center;
-        margin-bottom: 20px;
-        color: #222;
+        font-size: 24px;
     }
-
-    label {
-        display: block;
-        margin-top: 10px;
-        margin-bottom: 4px;
-        font-size: 14px;
-        font-weight: 500;
-    }
-
-    input, textarea, select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-size: 15px;
-    }
-
-    textarea {
-        resize: vertical;
-        height: 80px;
-    }
-
-    button {
-        margin-top: 20px;
-        width: 100%;
-        padding: 12px;
-        background: #20bf6b;
-        border: none;
-        color: white;
-        border-radius: 8px;
-        font-size: 16px;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background: #17a85e;
-    }
-
-    #preview {
-        margin-top: 10px;
-        width: 100%;
-        max-height: 200px;
-        object-fit: contain;
-        display: none;
-    }
-
-    #msg {
-        text-align: center;
-        margin-top: 15px;
-        font-weight: bold;
-    }
+}
 </style>
 
 </head>
 <body>
 
+<!-- Navbar -->
+<header class="navbar">
+    <div class="logo">
+        <i class="fas fa-paw"></i> Painel Petshop
+    </div>
+    <a href="painel_petshop.html" class="btn-voltar">
+        <i class="fas fa-arrow-left"></i> Voltar
+    </a>
+</header>
+
 <div class="container">
+    <div class="form-header">
+        <div class="icon">
+            <i class="fas fa-box"></i>
+        </div>
+        <h2>Cadastrar Produto</h2>
+        <p>Preencha os dados do novo produto</p>
+    </div>
 
-    <h2>Cadastrar Produto</h2>
+    <label><i class="fas fa-tag"></i> Nome do Produto</label>
+    <input type="text" id="nome" placeholder="Digite o nome do produto" required>
 
-    <label>Nome do Produto</label>
-    <input type="text" id="nome">
+    <label><i class="fas fa-align-left"></i> Descrição</label>
+    <textarea id="descricao" placeholder="Descreva o produto"></textarea>
 
-    <label>Descrição</label>
-    <textarea id="descricao"></textarea>
+    <label><i class="fas fa-dollar-sign"></i> Preço (R$)</label>
+    <input type="number" id="preco" step="0.01" placeholder="0.00" min="0" required>
 
-    <label>Preço (R$)</label>
-    <input type="number" id="preco" step="0.01">
-
-    <label>Categoria</label>
-    <select id="categoria">
+    <label><i class="fas fa-list"></i> Categoria</label>
+    <select id="categoria" required>
+        <option value="">Selecione uma categoria</option>
         <option value="ração">Ração</option>
         <option value="acessório">Acessório</option>
         <option value="higiene">Higiene</option>
     </select>
 
-    <label>Imagem do Produto</label>
+    <label><i class="fas fa-image"></i> Imagem do Produto</label>
     <input type="file" id="imagem" accept="image/*" onchange="previewImage(event)">
     <img id="preview" />
 
-    <button onclick="cadastrarProduto()">Cadastrar Produto</button>
+    <button onclick="cadastrarProduto()" id="btnCadastrar">
+        <i class="fas fa-plus"></i> Cadastrar Produto
+    </button>
 
-    <p id="msg"></p>
+    <div id="msg"></div>
 
 </div>
 
@@ -130,15 +372,28 @@ async function cadastrarProduto() {
         return;
     }
 
-    const nome = document.getElementById("nome").value;
-    const descricao = document.getElementById("descricao").value;
+    const nome = document.getElementById("nome").value.trim();
+    const descricao = document.getElementById("descricao").value.trim();
     const preco = document.getElementById("preco").value;
     const categoria = document.getElementById("categoria").value;
     const imagem = document.getElementById("imagem").files[0];
 
+    // Validação
+    if (!nome || !preco || !categoria) {
+        const msg = document.getElementById("msg");
+        msg.className = "error";
+        msg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Preencha todos os campos obrigatórios!';
+        return;
+    }
+
+    const btnCadastrar = document.getElementById("btnCadastrar");
+    const originalText = btnCadastrar.innerHTML;
+    btnCadastrar.disabled = true;
+    btnCadastrar.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cadastrando...';
+
     const msg = document.getElementById("msg");
-    msg.innerText = "Cadastrando...";
-    msg.style.color = "black";
+    msg.className = "loading";
+    msg.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cadastrando produto...';
 
     const formData = new FormData();
     formData.append("nome", nome);
@@ -147,28 +402,38 @@ async function cadastrarProduto() {
     formData.append("categoria", categoria);
     if (imagem) formData.append("imagem", imagem);
 
-    const resp = await fetch("http://localhost:3000/produto", {
-        method: "POST",
-        headers: { 
-            "Authorization": "Bearer " + token 
-        },
-        body: formData
-    });
+    try {
+        const resp = await fetch("http://localhost:3000/produto", {
+            method: "POST",
+            headers: { 
+                "Authorization": "Bearer " + token 
+            },
+            body: formData
+        });
 
-    const data = await resp.json();
+        const data = await resp.json();
 
-    if (!resp.ok) {
-        msg.innerText = data.error;
-        msg.style.color = "red";
-        return;
+        if (!resp.ok) {
+            msg.className = "error";
+            msg.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${data.error || "Erro ao cadastrar produto"}`;
+            btnCadastrar.disabled = false;
+            btnCadastrar.innerHTML = originalText;
+            return;
+        }
+
+        msg.className = "success";
+        msg.innerHTML = '<i class="fas fa-check-circle"></i> Produto cadastrado com sucesso!';
+
+        setTimeout(() => {
+            window.location.href = "painel_petshop.html";
+        }, 1500);
+    } catch (error) {
+        console.error("Erro:", error);
+        msg.className = "error";
+        msg.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Erro de conexão. Tente novamente.';
+        btnCadastrar.disabled = false;
+        btnCadastrar.innerHTML = originalText;
     }
-
-    msg.innerText = "Produto cadastrado com sucesso!";
-    msg.style.color = "green";
-
-    setTimeout(() => {
-        window.location.href = "painel_petshop.html";
-    }, 1500);
 }
 </script>
 
